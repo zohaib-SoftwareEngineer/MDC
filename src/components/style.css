@@ -1,0 +1,12 @@
+.bordered-button {
+    padding: 0.4rem 0.6rem;
+    justify-content: space-between;
+    border-radius: 80px;
+    background-image: linear-gradient(#10121B,#10121B),radial-gradient(circle at left top,#FFA409,#2D324B);
+    background-origin: border-box;
+    background-clip: padding-box,border-box;
+    border: 2px double transparent;
+    max-height: 36.8px;
+    font-weight: 600;
+    color: white;
+}
