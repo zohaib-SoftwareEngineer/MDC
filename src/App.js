@@ -4,14 +4,14 @@ import {
   theme,
 } from '@chakra-ui/react';
 import { ContextConnect } from './context/ContextConnect';
-import Dashboard from './screens/Dashboard';
+import Mainroutes from './routes/Mainroutes';
 
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <ContextConnect>
-        <Dashboard />
+        <Mainroutes/>
       </ContextConnect>
     </ChakraProvider>
   );

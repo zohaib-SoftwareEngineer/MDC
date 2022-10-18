@@ -3,7 +3,10 @@ import React from 'react';
 import coin from '../assets/images/coin.png';
 import back from '../assets/images/back.png';
 import './style.css';
+import HeaderDrawer from './HeaderDrawer';
+import {useNavigate} from 'react-router-dom'
 const Header = () => {
+  const nav = useNavigate()
   return (
     <Stack py="1.5" px="2" w="100%">
       <Stack
@@ -14,6 +17,7 @@ const Header = () => {
         justifyContent={'space-between'}
         py="2"
         px="4"
+        alignItems={'center'}
       >
         {/* left side */}
         <Stack spacing={'6'} direction={'row'}>
@@ -23,9 +27,13 @@ const Header = () => {
             textAlign="center"
             maxW={'48'}
           >
-            <Image _hover={{ cursor: 'pointer' }} src={coin} w="20" />
+            <Image
+              _hover={{ cursor: 'pointer' }}
+              src={coin}
+              w={{ base: '16', lg: '20' }}
+            />
             <Text
-              fontSize={'lg'}
+              fontSize={{ base: 'sm', lg: 'lg' }}
               fontWeight="600"
               fontStyle={'italic'}
               color={'#f28b03'}
@@ -33,24 +41,62 @@ const Header = () => {
               Muslim Digital Coin
             </Text>
           </HStack>
-          <Box w="fit-content" p="4" bg="rgb(13,16,26)">
-            <Stack spacing={'5'} direction={'row'} className="bordered-button">
+          <Box
+            display={{ base: 'none', md: 'inherit' }}
+            w="fit-content"
+            p={{ base: '1', md: '2', lg: '4' }}
+            bg="rgb(13,16,26)"
+          >
+            <Stack
+              minW={'fit-content'}
+              fontSize={{ base: 'xx-small', lg: 'md' }}
+              spacing={{ base: '1', lg: '5' }}
+              direction={'row'}
+              className="bordered-button"
+            >
               <Text>MDC Price</Text>
               <Text>$0.036</Text>
             </Stack>
           </Box>
         </Stack>
         {/* right side */}
-        <Stack spacing={'6'} direction={'row'}>
-          <Box w="fit-content" p="4" bg="rgb(13,16,26)">
-            <Stack spacing={'4'} direction={'row'} className="bordered-button">
+        <Stack display={{ base: 'inherit', md: 'none' }}>
+          <HeaderDrawer />
+        </Stack>
+        <Stack
+          display={{ base: 'none', md: 'flex' }}
+          alignItems={'center'}
+          spacing={'6'}
+          direction={'row'}
+        >
+          <Button
+            size={{ base: 'sm', lg: 'md' }}
+            _hover={{}}
+            rounded={'full'}
+            color="white"
+            bg="rgb(255,171,45)"
+          >
+            Connect Wallet
+          </Button>
+          <Box
+            w="fit-content"
+            p={{ base: '1', md: '2', lg: '4' }}
+            bg="rgb(13,16,26)"
+          >
+            <Stack
+              fontSize={{ base: 'xx-small', lg: 'md' }}
+              spacing={{ base: '1', lg: '5' }}
+              direction={'row'}
+              className="bordered-button"
+            >
               <Text>Balance</Text>
               <Text>0 MDC</Text>
             </Stack>
           </Box>
-          <Image _hover={{cursor:'pointer'}} src={back} w='20' />
+          <Stack onClick={()=>nav('/')}>
+          <Image  _hover={{ cursor: 'pointer' }} src={back} w={{ base: '16', lg: '20' }} />
+          </Stack>
         </Stack>
-
       </Stack>
     </Stack>
   );

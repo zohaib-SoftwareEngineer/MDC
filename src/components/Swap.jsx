@@ -119,15 +119,16 @@ const Swap = () => {
   };
 
   return (
-    <Stack>
+    <Stack w='100%' alignSelf={'center'}>
       <Stack
+      alignSelf={'center'}
         bgColor={'#23242A'}
         h={'fit-content'}
-        w={'fit-content'}
+        w={{base:'95%',md:'50%'}}
         borderRadius="2xl"
         justify={'space-between'}
         pb={'6'}
-        px={'2'}
+        px={{base:'0',md:'2'}}
       >
         <Stack>
           {/* Header */}
@@ -141,10 +142,10 @@ const Swap = () => {
           >
             <Img
               src={mdclogo}
-              boxSize={{ base: '6', lg: '12' }}
+              boxSize={{ base: '8', lg: '12' }}
               objectFit={'cover'}
             />
-            <HStack w={'60%'}>
+            <HStack w={{base:'90%',sm:'60%'}}>
               <HStack
                 color={'#B2B9D2'}
                 as={Button}
@@ -187,7 +188,7 @@ const Swap = () => {
                     textOverflow={'ellipsis'}
                     overflow={'hidden'}
                     w={'fit-content'}
-                    fontSize={'xs'}
+                    fontSize={'md'}
                     color={'white'}
                   >
                     Connect Wallet
@@ -302,7 +303,7 @@ const Swap = () => {
                   border={'1px solid #23242A !important'}
                   borderRadius={'2xl'}
                   color={'#B2B9D2'}
-                  px={'6'}
+                  px={{base:'2',md:'6'}}
                   py={'2'}
                 >
                   <HStack fontWeight={'bold'}>
@@ -372,7 +373,7 @@ const Swap = () => {
                   border={'1px solid #23242A !important'}
                   borderRadius={'2xl'}
                   color={'#B2B9D2'}
-                  px={'6'}
+                  px={{base:'2',md:'6'}}
                   py={'2'}
                 >
                   <HStack fontWeight={'bold'}>

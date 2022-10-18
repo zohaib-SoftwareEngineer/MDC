@@ -1,18 +1,9 @@
 import { Button, Grid, Link, Stack } from '@chakra-ui/react';
-import React, { useContext, useState } from 'react';
-import PFPBalanceCard from '../components/PFPBalanceCard';
-import Swap from '../components/Swap';
-import card1 from '../assets/images/card1.jpg';
-import card2 from '../assets/images/card2.jpg';
-import card3 from '../assets/images/card3.jpg';
-import card4 from '../assets/images/card4.jpg';
-import pfp from '../assets/images/coin.png';
-import bnb from '../assets/images/bnb.png';
-import usdt from '../assets/images/usdt.png';
-import wbtc from '../assets/images/wbtc.png';
+import React, { useContext, useState } from 'react'
 import ContextWallet from '../context/ContextConnect';
 import Header from '../components/Header';
 import Cards from '../components/Cards';
+import Footer from '../components/Footer';
 
 const Dashboard = () => {
   const { walletAddress, bnbBalance, usdtBalance, wbtcBalance, pfpBalance } =
@@ -24,8 +15,9 @@ const Dashboard = () => {
   )}...${addresstoString?.slice(addresstoString.length - 4)}`;
   return (
     <Stack minH="100vh" bgColor={'rgb(16,17,45)'}>
-      <Header />
+      {/* <Header />
       <Cards/>
+      <Footer/> */}
       {/* <Stack bgColor={'#0b0c22'} p={{base:'2',sm:'6'}}> */}
       {/* <Stack px={'8'}> */}
       {/* <Button
