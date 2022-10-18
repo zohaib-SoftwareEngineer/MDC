@@ -124,7 +124,7 @@ const Swap = () => {
       alignSelf={'center'}
         bgColor={'#23242A'}
         h={'fit-content'}
-        w={{base:'95%',md:'50%'}}
+        w={{base:'95%',md:'50%',lg:"40%"}}
         borderRadius="2xl"
         justify={'space-between'}
         pb={'6'}
