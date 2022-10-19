@@ -8,10 +8,9 @@ import {useNavigate} from 'react-router-dom';
 import ContextWallet from '../context/ContextConnect';
 
 const Header = () => {
-  const {
-    connectWallet, walletAddress, pfpBalance} = useContext(ContextWallet);
-    const addresstoString = walletAddress?.toString();
-    const addressString = `${addresstoString?.slice(0, 5)}...${addresstoString?.slice(addresstoString.length - 4)}`;
+  const {connectWallet, walletAddress, pfpBalance} = useContext(ContextWallet);
+  const addresstoString = walletAddress?.toString();
+  const addressString = `${addresstoString?.slice(0, 5)}...${addresstoString?.slice(addresstoString.length - 4)}`;
   const nav = useNavigate()
   return (
     <Stack py="1.5" px="2" w="100%">

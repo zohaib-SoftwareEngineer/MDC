@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext }  from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -15,7 +15,12 @@ import {
 import { HamburgerIcon } from '@chakra-ui/icons';
 import back from '../assets/images/back.png';
 import { useNavigate } from 'react-router-dom';
+import ContextWallet from '../context/ContextConnect';
+
 const HeaderDrawer = () => {
+  const {connectWallet, walletAddress, pfpBalance} = useContext(ContextWallet);
+  const addresstoString = walletAddress?.toString();
+  const addressString = `${addresstoString?.slice(0, 5)}...${addresstoString?.slice(addresstoString.length - 4)}`;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const nav = useNavigate();
   return (
@@ -49,10 +54,25 @@ const HeaderDrawer = () => {
                 rounded={'full'}
                 color="white"
                 bg="rgb(255,171,45)"
+                onClick={() => connectWallet()}
               >
-                Connect Wallet
+              {walletAddress ? (
+                  <Text>
+                    {addressString}
+                  </Text>
+                ) : (
+                  <Text
+                    textOverflow={'ellipsis'}
+                    overflow={'hidden'}
+                    w={'fit-content'}
+                    fontSize={'md'}
+                    color={'white'}
+                  >
+                    Connect Wallet
+                  </Text>
+                )}
               </Button>
-              <Box w="200px" p={'3'} bg="rgb(13,16,26)">
+              <Box w="200px" p={'3'} >
                 <Stack
                   fontSize="sm"
                   spacing={{ base: '1', lg: '5' }}
@@ -64,7 +84,7 @@ const HeaderDrawer = () => {
                 </Stack>
               </Box>
 
-              <Box w={'200px'} p={'3'} bg="rgb(13,16,26)">
+              <Box w={'200px'} p={'3'} >
                 <Stack
                   fontSize="sm"
                   spacing={{ base: '1', lg: '5' }}
@@ -72,7 +92,12 @@ const HeaderDrawer = () => {
                   className="bordered-button"
                 >
                   <Text>Balance</Text>
-                  <Text>0 MDC</Text>
+                  {pfpBalance ? (
+                            <Text>{pfpBalance} MDC</Text>
+                        ) : (
+                            <Text>0 MDC</Text>
+                        )
+                        }
                 </Stack>
               </Box>
             </Stack>
