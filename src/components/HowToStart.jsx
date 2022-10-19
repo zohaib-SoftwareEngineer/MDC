@@ -1,4 +1,4 @@
-import { Heading, Image, Stack, Text, chakra } from '@chakra-ui/react';
+import { Heading, Image, Stack, Text, chakra, Link, LinkBox } from '@chakra-ui/react';
 import React from 'react';
 import meta from '../assets/images/metamask.png';
 import binanceToMetamask from '../assets/images/binanceToMetamask.png';
@@ -26,8 +26,9 @@ const HowToStart = () => {
             fontStyle="italic"
           >
             Go to MetaMask 
+            
             <chakra.span color="blue.500" _hover={{ cursor: 'pointer' }}>
-              (CLICK HERE) 
+             <Link href='https://metamask.io/'>(CLICK HERE) </Link>
             </chakra.span>
             and install the Chrome extension. Follow the steps on that guide and
             finish setting up the extension.

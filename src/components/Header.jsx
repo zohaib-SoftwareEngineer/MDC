@@ -1,11 +1,17 @@
 import { Box, Button, HStack, Image, Stack, Text } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
 import coin from '../assets/images/coin.png';
 import back from '../assets/images/back.png';
 import './style.css';
 import HeaderDrawer from './HeaderDrawer';
-import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom';
+import ContextWallet from '../context/ContextConnect';
+
 const Header = () => {
+  const {
+    connectWallet, walletAddress, pfpBalance} = useContext(ContextWallet);
+    const addresstoString = walletAddress?.toString();
+    const addressString = `${addresstoString?.slice(0, 5)}...${addresstoString?.slice(addresstoString.length - 4)}`;
   const nav = useNavigate()
   return (
     <Stack py="1.5" px="2" w="100%">
@@ -45,7 +51,6 @@ const Header = () => {
             display={{ base: 'none', md: 'inherit' }}
             w="fit-content"
             p={{ base: '1', md: '2', lg: '4' }}
-            bg="rgb(13,16,26)"
           >
             <Stack
               minW={'fit-content'}
@@ -75,13 +80,27 @@ const Header = () => {
             rounded={'full'}
             color="white"
             bg="rgb(255,171,45)"
+            onClick={() => connectWallet()}
           >
-            Connect Wallet
+            {walletAddress ? (
+                  <Text>
+                    {addressString}
+                  </Text>
+                ) : (
+                  <Text
+                    textOverflow={'ellipsis'}
+                    overflow={'hidden'}
+                    w={'fit-content'}
+                    fontSize={'md'}
+                    color={'white'}
+                  >
+                    Connect Wallet
+                  </Text>
+                )}
           </Button>
           <Box
             w="fit-content"
             p={{ base: '1', md: '2', lg: '4' }}
-            bg="rgb(13,16,26)"
           >
             <Stack
               fontSize={{ base: 'xx-small', lg: 'md' }}
@@ -89,8 +108,15 @@ const Header = () => {
               direction={'row'}
               className="bordered-button"
             >
-              <Text>Balance</Text>
-              <Text>0 MDC</Text>
+              {/* <Text>Balance</Text>
+               <Text>0 MDC</Text> */}
+               <Text>Balance</Text>
+               {pfpBalance ? (
+                            <Text>{pfpBalance} MDC</Text>
+                        ) : (
+                            <Text>0 MDC</Text>
+                        )
+                        }
             </Stack>
           </Box>
           <Stack onClick={()=>nav('/')}>
