@@ -25,7 +25,7 @@ const Cards = () => {
       <Stack
       spacing={'6'}
         justifyContent={'space-between'}
-        w={{ base: '90%',sm:'75%' }}
+        w={{ base: '90%',sm:'75%', md:'90%', lg:'75%' }}
         direction={{ base: 'column', md: 'row' }}
       >
         <Stack

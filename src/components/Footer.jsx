@@ -1,8 +1,10 @@
 import { HStack, Link, Stack } from '@chakra-ui/react';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import FooterDrawer from './FooterDrawer';
 
 const Footer = () => {
+  const nav = useNavigate()
   return (
     <Stack
       fontWeight="600"

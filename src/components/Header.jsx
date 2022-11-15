@@ -57,6 +57,8 @@ const Header = () => {
               spacing={{ base: '1', lg: '5' }}
               direction={'row'}
               className="bordered-button"
+              alignItems={'center'}
+              justifyContent={'center'}
             >
               <Text>MDC Price</Text>
               <Text>$0.036</Text>
@@ -106,6 +108,8 @@ const Header = () => {
               spacing={{ base: '1', lg: '5' }}
               direction={'row'}
               className="bordered-button"
+              alignItems={'center'}
+              justifyContent={'center'}
             >
               {/* <Text>Balance</Text>
                <Text>0 MDC</Text> */}
