@@ -124,7 +124,6 @@ export function ContextConnect({ children }) {
       }
       
     }else{
-      console.log("when user dont have metamask.");
       window.open('https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn','_blank')
     }
   };
