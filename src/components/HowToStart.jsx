@@ -1,4 +1,4 @@
-import { Heading, Image, Stack, Text, chakra, Link, LinkBox } from '@chakra-ui/react';
+import { Heading, Image, Stack, Text, chakra, Link } from '@chakra-ui/react';
 import React from 'react';
 import meta from '../assets/images/metamask.png';
 import binanceToMetamask from '../assets/images/binanceToMetamask.png';

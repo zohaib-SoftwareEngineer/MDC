@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
-import { Contract, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import {
   icoAbi,
   pfpAbi,
@@ -9,8 +9,10 @@ import {
   usdtContractAddress,
   wbtcContractAddress,
 } from '../utills/constants/constants';
-import { useToast } from '@chakra-ui/react';
+import { ChakraProvider, Link, useToast } from '@chakra-ui/react';
 import detectEthereumProvider from '@metamask/detect-provider';
+import { useNavigate } from "react-router-dom";
+
 
 const ContextWallet = createContext();
 export function ContextConnect({ children }) {
@@ -21,6 +23,8 @@ export function ContextConnect({ children }) {
   const [pfpBalance, setpfpBalance] = useState();
   const [usdtBalance, setusdtBalance] = useState();
   const [input, setInput] = useState();
+  const nav=useNavigate()
+
   console.log(
     '🚀 ~ file: ContextConnect.jsx ~ line 24 ~ ContextConnect ~ input',
     input
@@ -37,8 +41,7 @@ export function ContextConnect({ children }) {
   const [convertedToken, setconvertedToken] = useState(0);
   const [convertedCurrency, setconvertedCurrency] = useState(0);
   const [isFirstInput, setFirstInput] = useState('first_input');
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
+
 
   // Input Handler
   const handleChange = (e, name, id) => {
@@ -110,6 +113,8 @@ export function ContextConnect({ children }) {
       );
 
       if (chainId === requiredChainId) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
         const address = await provider.send('eth_requestAccounts', []);
         setWalletAddress(address[0]);
         // setButtonText(shortAddress(account));
@@ -117,10 +122,16 @@ export function ContextConnect({ children }) {
         // //   return todo(account, new Web3(ethereum));
         // // }
       }
+      
+    }else{
+      console.log("when user dont have metamask.");
+      window.open('https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn','_blank')
     }
   };
   // PFP Contract Functions
   const pfpContractFunction = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
     const pfpContract = new ethers.Contract(
       pfpContractAddress,
       pfpAbi,
@@ -139,6 +150,8 @@ export function ContextConnect({ children }) {
 
     // approve owner function
     const approveOwner = async () => {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
       setIsLoadingApproval(true);
       const usdtContract = new ethers.Contract(
         usdtContractAddress,
@@ -162,6 +175,8 @@ export function ContextConnect({ children }) {
 
   // USDT Contract Functions
   const usdtContractFunction = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
     console.log('usdtcontract function');
     const usdtContract = new ethers.Contract(
       usdtContractAddress,
@@ -250,6 +265,8 @@ export function ContextConnect({ children }) {
 
   //   WBTC contract function
   const wbtcContractFunction = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
     
     console.log('wbtccontract function');
     const wbtcContract = new ethers.Contract(
@@ -334,6 +351,8 @@ export function ContextConnect({ children }) {
   
   //     BNB contract function
   const bnbContractFunction = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
     try{ 
     setIsLoadingBuy(true);
     const icoContract = new ethers.Contract(icoContractAddress, icoAbi, signer);
@@ -400,6 +419,8 @@ export function ContextConnect({ children }) {
 
   //     Fetch Balances
   const getBalance = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
     if (walletAddress) {
       // const bnbContract = new ethers.Contract(
       //     bnbContractAddress,
@@ -460,6 +481,8 @@ export function ContextConnect({ children }) {
 
   // Convert usdt to pfp token
   const usdtToPfp = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
     console.log('usdttopfp fun');
     const convertedInput = ethers.utils.parseEther(input);
     const icoContract = new ethers.Contract(icoContractAddress, icoAbi, signer);
@@ -497,6 +520,8 @@ export function ContextConnect({ children }) {
 
   // Conver PFP to Currency
   const pfoToCurrency = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
     const convertedInput = ethers.utils.parseEther(inputPfp);
     const icoContract = new ethers.Contract(icoContractAddress, icoAbi, signer);
     let currency = await icoContract.bnbAgainstTokens(convertedInput);
