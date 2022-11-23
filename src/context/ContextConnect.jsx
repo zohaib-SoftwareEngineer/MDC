@@ -11,8 +11,7 @@ import {
 } from '../utills/constants/constants';
 import { ChakraProvider, Link, useToast } from '@chakra-ui/react';
 import detectEthereumProvider from '@metamask/detect-provider';
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate } from 'react-router-dom';
 
 const ContextWallet = createContext();
 export function ContextConnect({ children }) {
@@ -23,25 +22,25 @@ export function ContextConnect({ children }) {
   const [pfpBalance, setpfpBalance] = useState();
   const [usdtBalance, setusdtBalance] = useState();
   const [input, setInput] = useState();
-  const nav=useNavigate()
-
-  console.log(
-    '🚀 ~ file: ContextConnect.jsx ~ line 24 ~ ContextConnect ~ input',
-    input
-  );
   const [inputPfp, setinputPfp] = useState();
   const [isApproveButton, setisApproveButton] = useState(false);
   const [isLoadingBuy, setIsLoadingBuy] = useState(false);
   const [isLoadingApproval, setIsLoadingApproval] = useState(false);
   const [network, setNetwork] = useState('BNB');
-  console.log(
-    '🚀 ~ file: ContextConnect.jsx ~ line 28 ~ ContextConnect ~ network',
-    network
-  );
   const [convertedToken, setconvertedToken] = useState(0);
   const [convertedCurrency, setconvertedCurrency] = useState(0);
   const [isFirstInput, setFirstInput] = useState('first_input');
 
+  let provider = window.ethereum
+    ? new ethers.providers.Web3Provider(window.ethereum)
+    : null;
+  let signer = window.ethereum ? provider.getSigner() : null;
+
+  useEffect(() => {
+    if (signer && provider) {
+      connectWallet();
+    }
+  }, []);
 
   // Input Handler
   const handleChange = (e, name, id) => {
@@ -66,6 +65,25 @@ export function ContextConnect({ children }) {
     }
   };
 
+  const MDCTokenAdded = () => {
+  
+      window.ethereum.sendAsync({
+        method: 'metamask_watchAsset',
+        params: {
+          type: 'ERC20',
+          options: {
+            address: '0x0921E508fd9EEfe54e03424b269CafC89b379593',
+            symbol: 'MDC',
+            decimals: 18,
+            image:
+              'https://netflix-99.s3.amazonaws.com/2022-09-19T10-42-49.599Zcoin.png',
+          },
+        },
+        id: 20,
+      });
+    
+  };
+
   // Methode to connect wallet
   const connectWallet = async () => {
     const requiredChainId = '0x61';
@@ -74,18 +92,18 @@ export function ContextConnect({ children }) {
     if (ethereum && (prompt || (await ethereum.isConnected()))) {
       ethereum
         .request({
-          method: 'wallet_switchEthereumChain',
+          method: 'wallet_addEthereumChain',
           params: [
             {
-              chainId: requiredChainId,
-              // chainName: requiredNetwork,
-              // nativeCurrency: {
-              //   name: "Binance Coin",
-              //   symbol: "BNB",
-              //   decimals: 18,
-              // },
-              // rpcUrls: [rpcUrls],
-              // blockExplorerUrls: [exporler],
+              chainId: '0x61',
+              rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+              chainName: 'BSC Testnet',
+              nativeCurrency: {
+                name: 'BNB',
+                symbol: 'BNB',
+                decimals: 18,
+              },
+              blockExplorerUrls: ['https://explorer.binance.org/smart-testnet'],
             },
           ],
         })
@@ -107,30 +125,17 @@ export function ContextConnect({ children }) {
       const chainId = await ethereum.request({
         method: 'eth_chainId',
       });
-      console.log(
-        '🚀 ~ file: ContextConnect.jsx ~ line 80 ~ connectWal ~ chainId',
-        chainId
-      );
 
       if (chainId === requiredChainId) {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
         const address = await provider.send('eth_requestAccounts', []);
         setWalletAddress(address[0]);
-        // setButtonText(shortAddress(account));
-        // // if (todo) {
-        // //   return todo(account, new Web3(ethereum));
-        // // }
       }
-      
-    }else{
-      window.open('https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn','_blank')
+    } else {
+      window.open('https://metamask.io/', '_blank');
     }
   };
   // PFP Contract Functions
   const pfpContractFunction = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
     const pfpContract = new ethers.Contract(
       pfpContractAddress,
       pfpAbi,
@@ -141,112 +146,81 @@ export function ContextConnect({ children }) {
       pfpContractAddress
     );
     const allowance = ethers.utils.formatEther(allowanceAmount);
-    console.log(
-      '🚀 ~ file: ContextConnect.jsx ~ line 48 ~ pfpContract ~ formatOwner',
-      allowance
-    );
   };
 
-    // approve owner function
-    const approveOwner = async () => {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      setIsLoadingApproval(true);
-      const usdtContract = new ethers.Contract(
-        usdtContractAddress,
-        pfpAbi,
-        signer
-      );
-      await usdtContract.approve(icoContractAddress, '20000000000000000000000');
-      usdtContract.on('Approval', (walletaddress, icocontractaddress, value) => {
-        console.log(walletaddress, icocontractaddress, value);
-        const etherAmount = ethers.utils.formatEther(value);
-        toast({
-          description: `Your wallet address ${walletaddress} is allowed to ${etherAmount} transferred to ICO contract ${icocontractaddress}.`,
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
-        });
-        setIsLoadingApproval(false);
-        setisApproveButton(false);
+  // approve owner function
+  const approveOwner = async () => {
+    setIsLoadingApproval(true);
+    const usdtContract = new ethers.Contract(
+      usdtContractAddress,
+      pfpAbi,
+      signer
+    );
+    await usdtContract.approve(icoContractAddress, '20000000000000000000000');
+    usdtContract.on('Approval', (walletaddress, icocontractaddress, value) => {
+      console.log(walletaddress, icocontractaddress, value);
+      const etherAmount = ethers.utils.formatEther(value);
+      toast({
+        description: `Your wallet address ${walletaddress} is allowed to ${etherAmount} transferred to ICO contract ${icocontractaddress}.`,
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
       });
-    };
+      setIsLoadingApproval(false);
+      setisApproveButton(false);
+    });
+  };
 
   // USDT Contract Functions
   const usdtContractFunction = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    console.log('usdtcontract function');
     const usdtContract = new ethers.Contract(
       usdtContractAddress,
       pfpAbi,
       signer
     );
     const icoContract = new ethers.Contract(icoContractAddress, icoAbi, signer);
-    console.log('check');
     const allowanceAmount = await usdtContract.allowance(
       walletAddress,
       icoContractAddress
     );
 
     const adjustedAllowance = ethers.utils.formatEther(allowanceAmount);
-    console.log(
-      '🚀 ~ file: ContextConnect.jsx ~ line 70 ~ usdtContractFunction ~ adjustedAllowance',
-      adjustedAllowance
-    );
 
     if (adjustedAllowance < 1) {
-      console.log('This is if statement');
       setisApproveButton(true);
     } else {
       try {
         setIsLoadingBuy(true);
         const convertedObject = Object.values(input);
-  
-        const convertedInput = ethers.utils.parseEther(convertedObject.join(''));
+
+        const convertedInput = ethers.utils.parseEther(
+          convertedObject.join('')
+        );
         const investUSD = await icoContract.investUSDT(convertedInput, {
           gasLimit: 3000000,
         });
         console.log(
-          '🚀 ~ file: ContextConnect.jsx ~ line 98 ~ usdtContractFunction ~ investUSD',
+          '🚀 ~ file: ContextConnect.jsx ~ line 201 ~ usdtContractFunction ~ investUSD',
           investUSD
         );
-        icoContract.on('InvestUSDT', (to, amount, from) => {
-          console.log(to, amount, from);
-          const etherAmount = ethers.utils.formatEther(amount);
-          const tokens = ethers.utils.formatEther(from);
-          const tokenAmount = Number(tokens);
-          const totalTokenAmount = tokenAmount.toFixed(4);
-
-          toast({
-            description: `${totalTokenAmount}MDC added to your wallet "${to}" at the price of ${etherAmount}USDT.`,
-            status: 'success',
-            duration: 9000,
-            isClosable: true,
+                 
+          icoContract.once('InvestUSDT', async (to, amount, from) => {
+            const etherAmount = ethers.utils.formatEther(amount);
+            const tokens = ethers.utils.formatEther(from);
+            const tokenAmount = Number(tokens);
+            const totalTokenAmount = tokenAmount.toFixed(4);
+            toast({
+              description: `${totalTokenAmount}MDC added to your wallet "${to}" at the price of ${etherAmount}USDT.`,
+              status: 'success',
+              duration: 9000,
+              isClosable: true,
+            });
+            setIsLoadingBuy(false);
+            await getBalance();
+            MDCTokenAdded();
           });
-          
-          setIsLoadingBuy(false);
-          getBalance();
-
-          window.ethereum.sendAsync(
-            {
-              method: 'metamask_watchAsset',
-              params: {
-                type: 'ERC20',
-                options: {
-                  address: '0x0921E508fd9EEfe54e03424b269CafC89b379593',
-                  symbol: 'MDC',
-                  decimals: 18,
-                  image:
-                    'https://netflix-99.s3.amazonaws.com/2022-09-19T10-42-49.599Zcoin.png',
-                },
-              },
-              id: 20,
-            },
-            
-          );
-        });
-        setisApproveButton(false);
+          setisApproveButton(false);
+        
       } catch (e) {
         console.log('transaction rejected/Reverted.');
         setisApproveButton(false);
@@ -258,15 +232,11 @@ export function ContextConnect({ children }) {
           isClosable: true,
         });
       }
-
     }
   };
 
   //   WBTC contract function
   const wbtcContractFunction = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    
     console.log('wbtccontract function');
     const wbtcContract = new ethers.Contract(
       wbtcContractAddress,
@@ -281,57 +251,84 @@ export function ContextConnect({ children }) {
     );
 
     const adjustedAllowance = ethers.utils.formatEther(allowanceAmount);
-    console.log(
-      '🚀 ~ file: ContextConnect.jsx ~ line 70 ~ usdtContractFunction ~ adjustedAllowance',
-      adjustedAllowance
-    );
 
     if (adjustedAllowance > 1) {
-      console.log('This is if statement');
       setisApproveButton(true);
     } else {
-      try{
+      try {
+        setIsLoadingBuy(true);
+        const convertedObject = Object.values(input);
+
+        const convertedInput = ethers.utils.parseEther(
+          convertedObject.join('')
+        );
+
+        const investwbtc = await icoContract.investWBTC(convertedInput, {
+          gasLimit: 3000000,
+        });
+        icoContract.once('InvestWBTC', (to, amount, from) => {
+          console.log(to, amount, from);
+          const etherAmount = ethers.utils.formatEther(amount);
+          const tokens = ethers.utils.formatEther(from);
+          const tokenAmount = Number(tokens);
+          const totalTokenAmount = tokenAmount.toFixed(4);
+          toast({
+            description: `${totalTokenAmount}MDC added to your wallet "${to}" at the price of ${etherAmount}WBTC.`,
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          });
+          setIsLoadingBuy(false);
+          getBalance();
+          MDCTokenAdded();
+        });
+        setisApproveButton(false); 
+      } catch (e) {
+        setisApproveButton(false);
+        setIsLoadingBuy(false);
+        toast({
+          description: `You rejected the transaction.`,
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    }
+  };
+
+  //     BNB contract function
+  const bnbContractFunction = async () => {
+    try {
       setIsLoadingBuy(true);
+      const icoContract = new ethers.Contract(
+        icoContractAddress,
+        icoAbi,
+        signer
+      );
       const convertedObject = Object.values(input);
-
-      const convertedInput = ethers.utils.parseEther(convertedObject.join(''));
-
-      const investwbtc = await icoContract.investWBTC(convertedInput, {
+      //const convertedInput = await ethers.utils.parseEther(convertedObject);
+      const options = {
+        value: ethers.utils.parseEther(convertedObject.join('')),
         gasLimit: 3000000,
-      });
-      icoContract.on('InvestWBTC', (to, amount, from) => {
+      };
+      const transaction = await icoContract.investBNB(options);
+      icoContract.once('InvestBNB', (to, amount, from) => {
         console.log(to, amount, from);
         const etherAmount = ethers.utils.formatEther(amount);
         const tokens = ethers.utils.formatEther(from);
         const tokenAmount = Number(tokens);
         const totalTokenAmount = tokenAmount.toFixed(4);
         toast({
-          description: `${totalTokenAmount}MDC added to your wallet "${to}" at the price of ${etherAmount}WBTC.`,
+          description: `${totalTokenAmount}MDC added to your wallet "${to}" at the price of ${etherAmount}BNB.`,
           status: 'success',
           duration: 9000,
           isClosable: true,
         });
         setIsLoadingBuy(false);
         getBalance();
-        window.ethereum.sendAsync(
-          {
-            method: 'metamask_watchAsset',
-            params: {
-              type: 'ERC20',
-              options: {
-                address: '0x0921E508fd9EEfe54e03424b269CafC89b379593',
-                symbol: 'MDC',
-                decimals: 18,
-                image:
-                  'https://netflix-99.s3.amazonaws.com/2022-09-19T10-42-49.599Zcoin.png',
-              },
-            },
-            id: 20,
-          },
-          console.log
-        );
-        
+        MDCTokenAdded();
       });
+
       setisApproveButton(false);
     } catch (e) {
       console.log('transaction rejected/Reverted.');
@@ -344,93 +341,11 @@ export function ContextConnect({ children }) {
         isClosable: true,
       });
     }
-
-  }
-};
-  
-  //     BNB contract function
-  const bnbContractFunction = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    try{ 
-    setIsLoadingBuy(true);
-    const icoContract = new ethers.Contract(icoContractAddress, icoAbi, signer);
-    const convertedObject = Object.values(input);
-    console.log(
-      '🚀 ~ file: ContextConnect.jsx ~ line 275 ~ bnbContractFunction ~ convertedObject',
-      convertedObject.join('')
-    );
-    //const convertedInput = await ethers.utils.parseEther(convertedObject);
-    const options = {
-      value: ethers.utils.parseEther(convertedObject.join('')),
-      gasLimit: 3000000,
-    };
-    const transaction = await icoContract.investBNB(options);
-    icoContract.on('InvestBNB', (to, amount, from) => {
-      console.log(to, amount, from);
-      const etherAmount = ethers.utils.formatEther(amount);
-      const tokens = ethers.utils.formatEther(from);
-      const tokenAmount = Number(tokens);
-      const totalTokenAmount = tokenAmount.toFixed(4);
-      toast({
-        description: `${totalTokenAmount}MDC added to your wallet "${to}" at the price of ${etherAmount}BNB.`,
-        status: 'success',
-        duration: 9000,
-        isClosable: true,
-      });
-      setIsLoadingBuy(false);
-      getBalance();
-      window.ethereum.sendAsync(
-        {
-          method: 'metamask_watchAsset',
-          params: {
-            type: 'ERC20',
-            options: {
-              address: '0x0921E508fd9EEfe54e03424b269CafC89b379593',
-              symbol: 'MDC',
-              decimals: 18,
-              image:
-                'https://netflix-99.s3.amazonaws.com/2022-09-19T10-42-49.599Zcoin.png',
-            },
-          },
-          id: 20,
-        },
-        console.log
-      );
-      
-    });
-    console.log(
-      '🚀 ~ file: ContextConnect.jsx ~ line 158 ~ bnbContractFunction ~ transaction',
-      transaction
-    );
-    setisApproveButton(false);
-  } catch (e) {
-    console.log('transaction rejected/Reverted.');
-    setisApproveButton(false);
-    setIsLoadingBuy(false);
-    toast({
-      description: `You rejected the transaction.`,
-      status: 'error',
-      duration: 9000,
-      isClosable: true,
-    });
-  }};
+  };
 
   //     Fetch Balances
   const getBalance = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
     if (walletAddress) {
-      // const bnbContract = new ethers.Contract(
-      //     bnbContractAddress,
-      //     pfpAbi,
-      //     provider
-      // );
-      // const bnb = await bnbContract.balanceOf(walletAddress);
-      // const bnbBalance = ethers.utils.formatEther(bnb);
-      // console.log("🚀 ~ file: ContextConnect.jsx ~ line 108 ~ getBalance ~ bnbBalance", bnbBalance)
-      // setbnbBalance(bnbBalance);
-
       const balance = await provider.getBalance(walletAddress);
       const bnb = ethers.utils.formatEther(balance);
       console.log(bnb);
@@ -480,37 +395,22 @@ export function ContextConnect({ children }) {
 
   // Convert usdt to pfp token
   const usdtToPfp = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
     console.log('usdttopfp fun');
     const convertedInput = ethers.utils.parseEther(input);
     const icoContract = new ethers.Contract(icoContractAddress, icoAbi, signer);
     if (network === 'BNB') {
       const tokens = await icoContract.tokensAgainstbnb(convertedInput);
       const usdtToPfpformat = ethers.utils.formatEther(tokens);
-      console.log(
-        '🚀 ~ file: ContextConnect.jsx ~ line 363 ~ usdtToPfp ~ usdtToPfpformat',
-        usdtToPfpformat
-      );
       const usdtnmbr = Number(usdtToPfpformat);
       setconvertedToken(usdtnmbr.toFixed(4));
     } else if (network === 'USDT') {
       const tokens = await icoContract.tokensAgainstUSDT(convertedInput);
       const usdtToPfpformat = ethers.utils.formatEther(tokens);
-      console.log(
-        '🚀 ~ file: ContextConnect.jsx ~ line 368 ~ usdtToPfp ~ usdtToPfpformat',
-        usdtToPfpformat
-      );
       const usdtnmbr = Number(usdtToPfpformat);
       setconvertedToken(usdtnmbr.toFixed(4));
     } else if (network === 'WBTC') {
       const tokens = await icoContract.tokensAgainstwbtc(convertedInput);
       const usdtToPfpformat = ethers.utils.formatEther(tokens);
-      console.log(
-        '🚀 ~ file: ContextConnect.jsx ~ line 373 ~ usdtToPfp ~ usdtToPfpformat',
-        usdtToPfpformat
-      );
-
       const usdtnmbr = Number(usdtToPfpformat);
       setconvertedToken(usdtnmbr.toFixed(4));
       setinputPfp(null);
@@ -519,8 +419,6 @@ export function ContextConnect({ children }) {
 
   // Conver PFP to Currency
   const pfoToCurrency = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
     const convertedInput = ethers.utils.parseEther(inputPfp);
     const icoContract = new ethers.Contract(icoContractAddress, icoAbi, signer);
     let currency = await icoContract.bnbAgainstTokens(convertedInput);
@@ -531,11 +429,6 @@ export function ContextConnect({ children }) {
     }
 
     const pfpformat = ethers.utils.formatEther(currency);
-    console.log(
-      '🚀 ~ file: ContextConnect.jsx ~ line 388 ~ pfoToCurrency ~ pfpformat',
-      pfpformat
-    );
-
     setconvertedCurrency(Number(pfpformat).toFixed(4));
     setInput(null);
   };
@@ -548,30 +441,26 @@ export function ContextConnect({ children }) {
     usdtToPfp();
   }, [input, network]);
 
-  const fetchUsdtMarketValue = async () => {
-    let response;
-    try {
-      response = await axios.get(
-        `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BNB`,
-        {
-          headers: {
-            'X-CMC_PRO_API_KEY': 'f9ee05ea-6612-4b59-8d6d-15d8cd1909a8',
-          },
-        }
-      );
-      let price = response?.data?.data['BNB'].quote.USD.price;
-      console.log(
-        '🚀 ~ file: ContextConnect.jsx ~ line 430 ~ fetchUsdtMarketValue ~ price',
-        price
-      );
-      // resolve(price);
-    } catch (ex) {
-      // resolve(ex);
-    }
-  };
-  if (network === 'USDT') {
-    fetchUsdtMarketValue();
-  }
+  // const fetchUsdtMarketValue = async () => {
+  //   let response;
+  //   try {
+  //     response = await axios.get(
+  //       `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BNB`,
+  //       {
+  //         headers: {
+  //           'X-CMC_PRO_API_KEY': 'f9ee05ea-6612-4b59-8d6d-15d8cd1909a8',
+  //         },
+  //       }
+  //     );
+  //     let price = response?.data?.data['BNB'].quote.USD.price;
+
+  //   } catch (ex) {
+
+  //   }
+  // };
+  // if (network === 'USDT') {
+  //   fetchUsdtMarketValue();
+  // }
   useEffect(() => {
     getBalance();
     pfpContractFunction();

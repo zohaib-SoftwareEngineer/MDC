@@ -81,14 +81,7 @@ const Swap = () => {
     isFirstInput,
     isLoadingApproval
   } = useContext(ContextWallet);
-  console.log(
-    '🚀 ~ file: Swap.jsx ~ line 83 ~ Swap ~ convertedToken',
-    convertedToken
-  );
-  console.log(
-    '🚀 ~ file: Swap.jsx ~ line 83 ~ Swap ~ convertedCurrency',
-    convertedCurrency
-  );
+  
   const [currentConvertedToken, setcurrentConvertedToken] = useState(convertedToken);
   const [currentConvertedCurrency, setcurrentConvertedCurrency] = useState(convertedCurrency);
 
