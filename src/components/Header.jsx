@@ -75,7 +75,7 @@ const Header = () => {
           spacing={'6'}
           direction={'row'}
         >
-          <Button
+          {/* <Button
             size={{ base: 'sm', lg: 'md' }}
             _hover={{}}
             rounded={'full'}
@@ -98,7 +98,7 @@ const Header = () => {
                     Connect Wallet
                   </Text>
                 )}
-          </Button>
+          </Button> */}
           <Box
             w="fit-content"
             p={{ base: '1', md: '2', lg: '4' }}

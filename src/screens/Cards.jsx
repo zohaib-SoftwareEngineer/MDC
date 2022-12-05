@@ -1,13 +1,14 @@
 import { Stack } from '@chakra-ui/react'
 import React from 'react'
-import Main from '../components/Main'
+import Cards from '../components/Cards'
+import HowToStart from '../components/HowToStart'
 import Wrapper from '../components/Wrapper'
 
 const Home = () => {
   return (
     <Wrapper>
-      <Stack spacing={'48'} py='24'>
-        <Main/>
+      <Stack spacing={'48'} py='5'>
+        <Cards/>
         </Stack>
     </Wrapper>
   )

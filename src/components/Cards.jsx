@@ -1,14 +1,19 @@
-import { HStack, chakra, Image, Stack, Text, Button, Modal,
+import { HStack, chakra, Image, Stack, Text, Button, Modal, VStack,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalOverlay, useDisclosure} from '@chakra-ui/react';
-import React from 'react';
+  import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ContextWallet from '../context/ContextConnect';
+import wallet from '../assets/images/wallet.png';
 import arrow from '../assets/images/arrow.png';
 import card from '../assets/images/card.png';
 import coin from '../assets/images/coin.png';
 const Cards = () => {
+  const {connectWallet, walletAddress, pfpBalance} = useContext(ContextWallet);
+  const addresstoString = walletAddress?.toString();
+  const addressString = `${addresstoString?.slice(0, 5)}...${addresstoString?.slice(addresstoString.length - 4)}`;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     // eslint-disable-next-line
@@ -22,12 +27,34 @@ const Cards = () => {
   const nav = useNavigate()
   return (
     <Stack w="100%" alignItems={'center'}>
+        <VStack alignItems={'center'} justifyContent={'space-between'}>
+           <Text
+              fontSize={{ base: 'sm', lg: 'lg' }}
+              fontWeight="600"
+              color={'#f28b03'}
+            >
+              IMPORTANT INSTRUCTIONS
+            </Text>
+            <Text
+              fontSize={{ base: 'sm', lg: 'lg' }}
+              fontWeight="600"
+              color={'white'}
+              w={{ base: '90%',sm:'75%', md:'90%', lg:'75%' }}
+              justifyContent={'space-between'}
+
+            >
+              We recommend to BUY / SWAP  only from a computer First you need to click on “Connect Wallet” If you don’t have MetaMask plugin (on Chrome), you will be redirected to download it
+
+            </Text>
+
+            </VStack>
       <Stack
       spacing={'6'}
         justifyContent={'space-between'}
         w={{ base: '90%',sm:'75%', md:'90%', lg:'75%' }}
         direction={{ base: 'column', md: 'row' }}
       >
+        
         <Stack
           boxShadow={
             'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset'
@@ -38,16 +65,18 @@ const Cards = () => {
           borderRadius={'3xl'}
           bg="rgb(38,41,54)"
         >
+        
           <HStack alignItems={'center'} justifyContent={'space-between'}>
             <Text color={'white'} fontWeight="700" fontSize={'2xl'}>
-              Buy MDC Token
+              Swap
             </Text>
             <Image src={arrow} w="20" h="16" />
           </HStack>
-          <Text mb={'-2 !important'} color="white" fontWeight={'600'}>
+          <Text mb={'-2 !important'} color="rgb(255,171,45)" fontWeight={'600'}>
             {' '}
-            <chakra.span color={'rgb(48,108,79)'}>Transaction </chakra.span>
-            for MDC Token.
+            {/* Import <chakra.span color={'rgb(48,108,79)'}> BNB </chakra.span>by card. */}
+            Swap your tokens (BNB, BTC, USDT) to MDC 
+
           </Text>
           <Image alignSelf={'end'} src={coin} w="32" />
           <Button
@@ -59,7 +88,7 @@ const Cards = () => {
             color="white"
             bg="rgb(255,171,45)"
           >
-            Buy Tokens
+            Swap Tokens
           </Button>
         </Stack>
         <Stack
@@ -74,15 +103,18 @@ const Cards = () => {
         >
           <HStack alignItems={'center'} justifyContent={'space-between'}>
             <Text color={'white'} fontWeight="700" fontSize={'2xl'}>
-              BUY BNB
+              BUY BY CARD
             </Text>
-            <Image src={card} w="28" h="16" />
+            {/* <Image src={card} w="28" h="16" /> */}
           </HStack>
-          <Text mb={'-2 !important'} color="white" fontWeight={'600'}>
+          <Text mb={'-2 !important'} color="rgb(255,171,45)" fontWeight={'600'}>
             {' '}
-            Import <chakra.span color={'rgb(48,108,79)'}> BNB </chakra.span>by card.
+            {/* Import <chakra.span color={'rgb(48,108,79)'}> BNB </chakra.span>by card. */}
+            BUY with credit/debit card  BNB, WBTC, USDT And SWAP to MDC
+
+
           </Text>
-          <Image alignSelf={'end'} src={coin} w="32" />
+          <Image alignSelf={'end'} src={card}  w="64"/>
           <Button
             fontSize={'lg'}
             _hover={{}}
@@ -113,7 +145,30 @@ const Cards = () => {
           </ModalBody>
         </ModalContent>
       </Modal>
-
+      <Button
+            size={{ base: 'sm', lg: 'md' }}
+            _hover={{}}
+            rounded={'8'}
+            color="white"
+            bg="rgb(255,171,45)"
+            onClick={() => connectWallet()}
+          >
+            {walletAddress ? (
+                  <Text>
+                    {addressString}
+                  </Text>
+                ) : (
+                  <Text
+                    textOverflow={'ellipsis'}
+                    overflow={'hidden'}
+                    w={'fit-content'}
+                    fontSize={'md'}
+                    color={'white'}
+                  >
+                    Connect Wallet
+                  </Text>
+                )}
+          </Button>
     </Stack>
   );
 };

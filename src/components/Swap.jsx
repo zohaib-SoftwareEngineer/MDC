@@ -257,7 +257,7 @@ const Swap = () => {
           </Stack>
 
           <Stack px={'2'}>
-            <Button
+            {/* <Button
               // as={Link}
               // href='https://pfptoken.netlify.app/'
               onClick={onOpen}
@@ -273,7 +273,7 @@ const Swap = () => {
               borderRadius={'2xl'}
             >
               Import BNB From Card
-            </Button>
+            </Button> */}
           </Stack>
 
           {/* Swap Converter */}
@@ -448,7 +448,7 @@ const Swap = () => {
                 borderRadius={'xl'}
                 size={'lg'}
               >
-                {walletAddress ? 'Buy' : 'Connect Wallet'}
+                {walletAddress ? 'SWAP tokens to MDC' : 'Connect Wallet'}
               </Button>
             </Stack>
           </Stack>
