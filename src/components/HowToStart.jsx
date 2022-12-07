@@ -22,7 +22,7 @@ const HowToStart = () => {
       >
         HOW TO START
       </Heading>
-      <Stack px="12" spacing={{base:'12',md:''}} justifyContent={'space-around'} direction={{base:'column',md:'row'}}>
+      <Stack px="12" spacing={{base:'12',md:''}} justifyContent={'space-around'} alignItems={'center'} direction={{base:'column',md:'row'}}>
         <Stack alignItems={'center'} w={{base:'100%',md:'30%'}} spacing='6'>
           <Image w={'48'} src={meta} />
           <Text color="#f28b03" fontSize={{base:'sm',lg:'md'}}>1. INSTALL METAMASK</Text>

@@ -1,4 +1,4 @@
-import { Heading, Image, Stack, Text, chakra, Link, Button } from '@chakra-ui/react';
+import { Heading, Image, Stack, Text, chakra, Link, Button, HStack } from '@chakra-ui/react';
 import meta from '../assets/images/metamask.png';
 import binanceToMetamask from '../assets/images/binanceToMetamask.png';
 import React, { useContext } from 'react';
@@ -21,7 +21,7 @@ const HowToStart = () => {
       </Heading> */}
       <Stack px="12" spacing={{base:'12',md:''}} justifyContent={'space-around'} direction={{base:'column',md:'row'}}>
         <Stack alignItems={'center'} w={{base:'100%',md:'100%'}} spacing='6'>
-          <Text color="#f28b03" fontSize={{base:'sm',lg:'md'}}>Do you have a MetaMask Wallet?</Text>
+          <Text color="#f28b03" fontSize={{base:'sm',lg:'60px'}}>Do you have a MetaMask Wallet?</Text>
           <Image w={'48'} src={meta} />
           
         </Stack>
@@ -78,20 +78,26 @@ const HowToStart = () => {
       </Stack>
       <Stack px="12" spacing={{base:'12',md:''}} justifyContent={'space-around'} direction={{base:'column',md:'row'}}>
         <Stack alignItems={'center'} justifyContent={'space-around'} w={{base:'100%',md:'30%'}} spacing='6'>
+        <HStack justifyContent={'space-between'} spacing={{base:'16',md:'24',lg:'24'}} mt={'6'} >
         <Button
-                      size={{ base: 'sm', lg: 'md' }}
+                      size={{ base: 'sm', lg: 'lg' }}
+                    
+                      
                       _hover={{}}
                       rounded={'8'}
                       color="white"
                       bg="rgb(255,171,45)"
+                      p={{base:'8',md:'8',lg:'12'}}
+
+                      w={{base:'80px',md:'180px',lg:'180px'}}
                       onClick={()=>nav('/cards')}
                     >
                       
                             <Text
                               textOverflow={'ellipsis'}
-                              overflow={'hidden'}
-                              w={'fit-content'}
-                              fontSize={'md'}
+                              overflow={{base:'inherit',md:'inherit',lg:'hidden'}}
+                              w={{base:'inherit',md:'inherit',lg:'fit-content'}}
+                              fontSize={{base:'20px',md:'20px',lg:'40px'}}
                               color={'white'}
                             >
                               Yes
@@ -100,10 +106,12 @@ const HowToStart = () => {
                     </Button>
 
                     <Button
-                      size={{ base: 'sm', lg: 'md' }}
+                      size={{ base: 'sm', lg: 'lg' }}
                       _hover={{}}
                       rounded={'8'}
                       color="white"
+                      p={{base:'8',md:'8',lg:'12'}}
+                      w={{base:'80px',md:'180px',lg:'180px'}}
                       bg="rgb(255,171,45)"
                       onClick={()=>nav('/HowToStart')}
                     >
@@ -112,13 +120,16 @@ const HowToStart = () => {
                               textOverflow={'ellipsis'}
                               overflow={'hidden'}
                               w={'fit-content'}
-                              fontSize={'md'}
+                              fontSize={{base:'20px',md:'20px',lg:'40px'}}
+
                               color={'white'}
+                              
                             >
                               No
                             </Text>
                           
                     </Button>
+                    </HStack>
           </Stack>
           </Stack>
     </Stack>

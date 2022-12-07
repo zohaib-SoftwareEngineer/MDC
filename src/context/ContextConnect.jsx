@@ -36,11 +36,11 @@ export function ContextConnect({ children }) {
     : null;
   let signer = window.ethereum ? provider.getSigner() : null;
 
-  useEffect(() => {
-    if (signer && provider) {
-      connectWallet();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (signer && provider) {
+  //     connectWallet();
+  //   }
+  // }, []);
 
   // Input Handler
   const handleChange = (e, name, id) => {

@@ -29,7 +29,7 @@ const Cards = () => {
     <Stack w="100%" alignItems={'center'}>
         <VStack alignItems={'center'} justifyContent={'space-between'}>
            <Text
-              fontSize={{ base: 'sm', lg: 'lg' }}
+              fontSize={{ base: 'sm', lg: 'xl' }}
               fontWeight="600"
               color={'#f28b03'}
             >
@@ -39,8 +39,10 @@ const Cards = () => {
               fontSize={{ base: 'sm', lg: 'lg' }}
               fontWeight="600"
               color={'white'}
-              w={{ base: '90%',sm:'75%', md:'90%', lg:'75%' }}
-              justifyContent={'space-between'}
+              w={{ base: '90%',sm:'75%', md:'90%', lg:'48%' }}
+              textAlign={'center'}
+
+
 
             >
               We recommend to BUY / SWAP  only from a computer First you need to click on “Connect Wallet” If you don’t have MetaMask plugin (on Chrome), you will be redirected to download it
@@ -53,6 +55,9 @@ const Cards = () => {
         justifyContent={'space-between'}
         w={{ base: '90%',sm:'75%', md:'90%', lg:'75%' }}
         direction={{ base: 'column', md: 'row' }}
+        alignItems={'center'}
+        // mt={'4 !important'}
+        
       >
         
         <Stack
@@ -86,7 +91,9 @@ const Cards = () => {
             rounded={'full'}
             w="48"
             color="white"
-            bg="rgb(255,171,45)"
+            bg={walletAddress?"rgb(255,171,45)":'#B2BEB5'}
+            // bg={walletAddress?"rgb(255,171,45)":'#848884'}
+            disabled={walletAddress?false:true}
           >
             Swap Tokens
           </Button>
@@ -121,7 +128,8 @@ const Cards = () => {
             rounded={'full'}
             w="48"
             color="white"
-            bg="rgb(255,171,45)"
+            bg={walletAddress?"rgb(255,171,45)":'#B2BEB5'}
+            disabled={walletAddress?false:true}
             onClick={onOpen}
           >
             Buy Tokens
@@ -152,6 +160,7 @@ const Cards = () => {
             color="white"
             bg="rgb(255,171,45)"
             onClick={() => connectWallet()}
+            display={walletAddress?'none':'inherit'}
           >
             {walletAddress ? (
                   <Text>
