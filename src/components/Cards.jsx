@@ -6,6 +6,7 @@ import { HStack, chakra, Image, Stack, Text, Button, Modal, VStack,
   import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ContextWallet from '../context/ContextConnect';
+import transakSDK from '@transak/transak-sdk'
 import wallet from '../assets/images/wallet.png';
 import arrow from '../assets/images/arrow.png';
 import card from '../assets/images/card.png';
@@ -23,6 +24,23 @@ const Cards = () => {
     // eslint-disable-next-line
     onClose: onCloseInfo,
   } = useDisclosure();
+  const launchTransak = ()=>{
+    let transak = new transakSDK({
+      apiKey: 'da2eef7d-9d65-41aa-a2db-ac45f711b880',  // Your API Key
+      environment: 'STAGING', // STAGING/PRODUCTION
+      widgetHeight: '625px',
+      widgetWidth: '500px',
+      // Examples of some of the customization parameters you can pass
+      defaultCryptoCurrency: 'BNB', // Example 'ETH'
+      walletAddress: 'walletAddress', // Your customer's wallet address
+      themeColor: 'COLOR_HEX', // App theme color
+      fiatCurrency: 'EUR', // If you want to limit fiat selection eg 'GBP'
+      email: 'example@gmail.com', // Your customer's email address
+      redirectURL: '' // Redirect URL of your app    
+  });
+  transak.init();
+  console.log(1122)
+  }
 
   const nav = useNavigate()
   return (
@@ -56,6 +74,7 @@ const Cards = () => {
         w={{ base: '90%',sm:'75%', md:'90%', lg:'75%' }}
         direction={{ base: 'column', md: 'row' }}
         alignItems={'center'}
+        p="8"
         // mt={'4 !important'}
         
       >
@@ -130,7 +149,7 @@ const Cards = () => {
             color="white"
             bg={walletAddress?"rgb(255,171,45)":'#B2BEB5'}
             disabled={walletAddress?false:true}
-            onClick={onOpen}
+            onClick={launchTransak}
           >
             Buy Tokens
           </Button>
@@ -145,7 +164,7 @@ const Cards = () => {
             <Stack p={'6'}>
               <iframe
                 title="Crypto Currencies"
-                src="https://staging-global.transak.com/?apiKey=da2eef7d-9d65-41aa-a2db-ac45f711b880"
+                // src="https://staging-global.transak.com/?apiKey=da2eef7d-9d65-41aa-a2db-ac45f711b880?network=bsc"
                 height="600px"
                 width="100%"
               ></iframe>
