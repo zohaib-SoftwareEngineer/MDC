@@ -32,14 +32,14 @@ const Cards = () => {
       widgetWidth: '500px',
       // Examples of some of the customization parameters you can pass
       defaultCryptoCurrency: 'BNB', // Example 'ETH'
-      walletAddress: 'walletAddress', // Your customer's wallet address
-      themeColor: 'COLOR_HEX', // App theme color
+      walletAddress: walletAddress, // Your customer's wallet address
+      themeColor: '#f28b03', // App theme color
       fiatCurrency: 'EUR', // If you want to limit fiat selection eg 'GBP'
-      email: 'example@gmail.com', // Your customer's email address
-      redirectURL: '' // Redirect URL of your app    
+      email: 'zohaibsaddiqui@gmail.com', // Your customer's email address
+      redirectURL: 'http://localhost:3000/cards' // Redirect URL of your app    
   });
   transak.init();
-  console.log(1122)
+  // console.log(1122)
   }
 
   const nav = useNavigate()

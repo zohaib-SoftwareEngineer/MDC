@@ -108,7 +108,7 @@ export function ContextConnect({ children }) {
           ],
         })
         .catch(error => {
-          console.log(error);
+          // console.log(error);
         });
       ethereum.on('accountsChanged', () => {
         window.location.reload();
@@ -158,7 +158,7 @@ export function ContextConnect({ children }) {
     );
     await usdtContract.approve(icoContractAddress, '20000000000000000000000');
     usdtContract.on('Approval', (walletaddress, icocontractaddress, value) => {
-      console.log(walletaddress, icocontractaddress, value);
+      // console.log(walletaddress, icocontractaddress, value);
       const etherAmount = ethers.utils.formatEther(value);
       toast({
         description: `Your wallet address ${walletaddress} is allowed to ${etherAmount} transferred to ICO contract ${icocontractaddress}.`,
@@ -199,10 +199,7 @@ export function ContextConnect({ children }) {
         const investUSD = await icoContract.investUSDT(convertedInput, {
           gasLimit: 3000000,
         });
-        console.log(
-          '🚀 ~ file: ContextConnect.jsx ~ line 201 ~ usdtContractFunction ~ investUSD',
-          investUSD
-        );
+        
                  
           icoContract.once('InvestUSDT', async (to, amount, from) => {
             const etherAmount = ethers.utils.formatEther(amount);
@@ -222,7 +219,7 @@ export function ContextConnect({ children }) {
           setisApproveButton(false);
         
       } catch (e) {
-        console.log('transaction rejected/Reverted.');
+        // console.log('transaction rejected/Reverted.');
         setisApproveButton(false);
         setIsLoadingBuy(false);
         toast({
@@ -237,7 +234,7 @@ export function ContextConnect({ children }) {
 
   //   WBTC contract function
   const wbtcContractFunction = async () => {
-    console.log('wbtccontract function');
+    // console.log('wbtccontract function');
     const wbtcContract = new ethers.Contract(
       wbtcContractAddress,
       pfpAbi,
@@ -267,7 +264,7 @@ export function ContextConnect({ children }) {
           gasLimit: 3000000,
         });
         icoContract.once('InvestWBTC', (to, amount, from) => {
-          console.log(to, amount, from);
+          // console.log(to, amount, from);
           const etherAmount = ethers.utils.formatEther(amount);
           const tokens = ethers.utils.formatEther(from);
           const tokenAmount = Number(tokens);
@@ -313,7 +310,7 @@ export function ContextConnect({ children }) {
       };
       const transaction = await icoContract.investBNB(options);
       icoContract.once('InvestBNB', (to, amount, from) => {
-        console.log(to, amount, from);
+        // console.log(to, amount, from);
         const etherAmount = ethers.utils.formatEther(amount);
         const tokens = ethers.utils.formatEther(from);
         const tokenAmount = Number(tokens);
@@ -331,7 +328,7 @@ export function ContextConnect({ children }) {
 
       setisApproveButton(false);
     } catch (e) {
-      console.log('transaction rejected/Reverted.');
+      // console.log('transaction rejected/Reverted.');
       setisApproveButton(false);
       setIsLoadingBuy(false);
       toast({
@@ -348,7 +345,7 @@ export function ContextConnect({ children }) {
     if (walletAddress) {
       const balance = await provider.getBalance(walletAddress);
       const bnb = ethers.utils.formatEther(balance);
-      console.log(bnb);
+      // console.log(bnb);
       const bnbNumber = Number(bnb);
       setbnbBalance(bnbNumber.toFixed(4));
 
@@ -360,7 +357,7 @@ export function ContextConnect({ children }) {
       );
       const pfp = await pfpContract.balanceOf(walletAddress);
       const pfpBalance = ethers.utils.formatEther(pfp);
-      console.log(pfpBalance);
+      // console.log(pfpBalance);
       const pfpNumber = Number(pfpBalance);
       setpfpBalance(pfpNumber.toFixed(4));
 
@@ -372,7 +369,7 @@ export function ContextConnect({ children }) {
       );
       const usdt = await usdtContract.balanceOf(walletAddress);
       const usdtBal = ethers.utils.formatEther(usdt);
-      console.log(usdtBal);
+      // console.log(usdtBal);
       const usdtNumber = Number(usdtBal);
 
       setusdtBalance(usdtNumber.toFixed(4));
@@ -385,17 +382,17 @@ export function ContextConnect({ children }) {
       );
       const wbtc = await wbtcContract.balanceOf(walletAddress);
       const wbtcBalance = ethers.utils.formatEther(wbtc);
-      console.log(wbtcBalance);
+      // console.log(wbtcBalance);
       const wbtcNumber = Number(wbtcBalance);
       setwbtcBalance(wbtcNumber.toFixed(4));
     } else {
-      console.log('no address');
+      // // console.log('no address');
     }
   };
 
   // Convert usdt to pfp token
   const usdtToPfp = async () => {
-    console.log('usdttopfp fun');
+    // // console.log('usdttopfp fun');
     const convertedInput = ethers.utils.parseEther(input);
     const icoContract = new ethers.Contract(icoContractAddress, icoAbi, signer);
     if (network === 'BNB') {

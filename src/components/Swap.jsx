@@ -60,7 +60,7 @@ const Swap = () => {
     onOpen: onOpenInfo,
     onClose: onCloseInfo,
   } = useDisclosure();
-  console.log(networkAmount);
+  // console.log(networkAmount);
   const {
     connectWallet,
     walletAddress,
@@ -97,7 +97,7 @@ const Swap = () => {
   )}...${addresstoString?.slice(addresstoString.length - 4)}`;
   const handleBuyCall = () => {
     if (walletAddress) {
-      console.log('have wallet Address');
+      // console.log('have wallet Address');
       if (selectedNetwork === 'USDT') {
         usdtContractFunction();
       } else if (selectedNetwork === 'WBTC') {
@@ -106,7 +106,7 @@ const Swap = () => {
         bnbContractFunction();
       }
     } else {
-      console.log('Not have wallet Address');
+      // console.log('Not have wallet Address');
       connectWallet();
     }
   };
