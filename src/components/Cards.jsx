@@ -91,12 +91,12 @@ const Cards = () => {
         >
         
           <HStack alignItems={'center'} justifyContent={'space-between'}>
-            <Text color={'white'} fontWeight="700" fontSize={'2xl'}>
+            <Text color={'white'} mt={{base:'0 !important',md:'-10 !important'}} fontWeight="700" fontSize={'2xl'}>
               SWAP
             </Text>
             <Image src={arrow} w="20" h="16" />
           </HStack>
-          <Text mb={'-2 !important'} color="rgb(255,171,45)" fontWeight={'600'}>
+          <Text  mt={{base:'0 !important',md:'-6 !important'}}  color="rgb(255,171,45)" fontWeight={'600'}>
             {' '}
             {/* Import <chakra.span color={'rgb(48,108,79)'}> BNB </chakra.span>by card. */}
             Swap your tokens (BNB, BTC, USDT) to MDC 

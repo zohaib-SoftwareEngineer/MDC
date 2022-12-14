@@ -167,6 +167,7 @@ const Swap = () => {
                 }}
                 onClick={() => connectWallet()}
                 size={{ base: 'sm', lg: 'md' }}
+                pointerEvents={walletAddress?'none':'inherit'}
               >
                 {walletAddress ? (
                   <Text
