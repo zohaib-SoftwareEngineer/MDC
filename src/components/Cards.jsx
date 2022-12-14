@@ -9,7 +9,7 @@ import ContextWallet from '../context/ContextConnect';
 import transakSDK from '@transak/transak-sdk'
 import wallet from '../assets/images/wallet.png';
 import arrow from '../assets/images/arrow.png';
-import card from '../assets/images/card.png';
+import card from '../assets/images/ATMO.png';
 import coin from '../assets/images/coin.png';
 const Cards = () => {
   const {connectWallet, walletAddress, pfpBalance} = useContext(ContextWallet);
@@ -36,7 +36,7 @@ const Cards = () => {
       themeColor: '#f28b03', // App theme color
       fiatCurrency: 'EUR', // If you want to limit fiat selection eg 'GBP'
       email: 'zohaibsaddiqui@gmail.com', // Your customer's email address
-      redirectURL: 'http://localhost:3000/cards' // Redirect URL of your app    
+      redirectURL: '' // Redirect URL of your app    
   });
   transak.init();
   // console.log(1122)
@@ -92,7 +92,7 @@ const Cards = () => {
         
           <HStack alignItems={'center'} justifyContent={'space-between'}>
             <Text color={'white'} fontWeight="700" fontSize={'2xl'}>
-              Swap
+              SWAP
             </Text>
             <Image src={arrow} w="20" h="16" />
           </HStack>
@@ -140,7 +140,7 @@ const Cards = () => {
 
 
           </Text>
-          <Image alignSelf={'end'} src={card}  w="64"/>
+          <Image alignSelf={'end'} src={card}  w="36"/>
           <Button
             fontSize={'lg'}
             _hover={{}}

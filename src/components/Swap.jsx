@@ -135,7 +135,7 @@ const Swap = () => {
           >
             <Img
               src={mdclogo}
-              boxSize={{ base: '8', lg: '12' }}
+              boxSize={{ base: '12', lg: '130' }}
               objectFit={'cover'}
             />
             <HStack w={{base:'90%',sm:'60%'}}>

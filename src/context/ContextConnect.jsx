@@ -108,7 +108,7 @@ export function ContextConnect({ children }) {
           ],
         })
         .catch(error => {
-          // console.log(error);
+          console.log(error);
         });
       ethereum.on('accountsChanged', () => {
         window.location.reload();
