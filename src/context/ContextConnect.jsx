@@ -76,7 +76,7 @@ export function ContextConnect({ children }) {
             symbol: 'MDC',
             decimals: 18,
             image:
-              'https://netflix-99.s3.amazonaws.com/2022-09-19T10-42-49.599Zcoin.png',
+              'https://bafybeiezroy6qnruryt4takdurplgzmjmz56ppdsljzelipweedwekiqna.ipfs.nftstorage.link/coin.png',
           },
         },
         id: 20,
