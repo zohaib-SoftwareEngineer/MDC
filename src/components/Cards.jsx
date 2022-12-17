@@ -185,7 +185,7 @@ const Cards = () => {
             color="rgb(255,171,45)"
             fontWeight={'600'}
             fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
-            // marginBottom={'5 !important'}
+            marginTop={'7 !important'}
           >
             {' '}
             {/* Import <chakra.span color={'rgb(48,108,79)'}> BNB </chakra.span>by card. */}
