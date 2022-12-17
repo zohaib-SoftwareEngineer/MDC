@@ -175,17 +175,18 @@ const Cards = () => {
             >
               BUY BY CARD
             </Text>
-            {/* <Image
+            <Image
               src={arrow}
               w={{ base: '10', sm: '12', md: '14', lg: '16' }}
               h={{ base: '8', md: '12', lg: '14' }}
-            /> */}
+              visibility='hidden'
+            />
           </HStack>
           <Text
             color="rgb(255,171,45)"
             fontWeight={'600'}
             fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
-            marginTop={'7 !important'}
+            // marginTop={'7 !important'}
           >
             {' '}
             {/* Import <chakra.span color={'rgb(48,108,79)'}> BNB </chakra.span>by card. */}
