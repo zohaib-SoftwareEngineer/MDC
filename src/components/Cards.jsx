@@ -80,18 +80,18 @@ const Cards = () => {
         </Text>
       </VStack>
       <Stack
-        spacing={'6'}
+        spacing={{base:'6',md:''}}
         justifyContent={'space-between'}
-        w={{ base: '90%', sm: '75%', md: '90%', lg: '75%' }}
+        w={{ base: '95%', sm: '75%', md: '95%', lg: '90%',xl:'70%' }}
         direction={{ base: 'column', md: 'row' }}
         alignItems={'center'}
-        p="8"
-        // mt={'4 !important'}
+        p={{ base: '3', md: '4', lg: '6', xl: '8' }}
       >
         <Stack
           boxShadow={
             'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset'
           }
+          justifyContent={'space-between'}
           _hover={{
             cursor: 'pointer',
             transform: 'Scale(1.05)',
@@ -101,26 +101,40 @@ const Cards = () => {
           p="4"
           borderRadius={'3xl'}
           bg="rgb(38,41,54)"
+          minH={{base:'250',sm:'280',md:'300',lg:'320'}}
+          maxH={{base:'250',sm:'280',md:'300',lg:'320'}}
+          height={{base:'250',sm:'280',md:'300',lg:'320'}}
         >
-          <HStack  alignItems={'center'} justifyContent={'space-between'}>
+          <HStack alignItems={'center'} justifyContent={'space-between'}>
             <Text
               color={'white'}
               fontWeight="700"
-              fontSize={'2xl'}
+              fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }}
+              alignSelf='center'
             >
               SWAP
             </Text>
-            <Image src={arrow} w="16" h="14" />
+            <Image
+              src={arrow}
+              w={{ base: '10', sm: '12', md: '14', lg: '16' }}
+              h={{ base: '8', md: '12', lg: '14' }}
+            />
           </HStack>
           <Text
             color="rgb(255,171,45)"
             fontWeight={'600'}
+            fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
+            // marginBottom={'5 !important'}
           >
             {' '}
             {/* Import <chakra.span color={'rgb(48,108,79)'}> BNB </chakra.span>by card. */}
             Swap your tokens (BNB, BTC, USDT) to MDC
           </Text>
-          <Image alignSelf={'end'} src={coin} w="32" />
+          <Image
+            alignSelf={'end'}
+            src={coin}
+            w={{ base: '20', sm: '24', md: '28', lg: '32' }}
+          />
           <Button
             onClick={() => nav('/swap')}
             fontSize={'lg'}
@@ -139,6 +153,7 @@ const Cards = () => {
           boxShadow={
             'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset'
           }
+          justifyContent={'space-between'}
           _hover={{
             cursor: 'pointer',
             transform: 'Scale(1.05)',
@@ -148,19 +163,39 @@ const Cards = () => {
           p="4"
           borderRadius={'3xl'}
           bg="rgb(38,41,54)"
+          minH={{base:'250',sm:'280',md:'300',lg:'320'}}
+          maxH={{base:'250',sm:'280',md:'300',lg:'320'}}
+          height={{base:'250',sm:'280',md:'300',lg:'320'}}
         >
-          <HStack  alignItems={'center'} justifyContent={'space-between'}>
-            <Text h="14" color={'white'} fontWeight="700" fontSize={'2xl'}>
+          <HStack alignItems={'center'} justifyContent={'space-between'}>
+            <Text
+              color={'white'}
+              fontWeight="700"
+              fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }}
+            >
               BUY BY CARD
             </Text>
-            {/* <Image src={card} w="28" h="16" /> */}
+            {/* <Image
+              src={arrow}
+              w={{ base: '10', sm: '12', md: '14', lg: '16' }}
+              h={{ base: '8', md: '12', lg: '14' }}
+            /> */}
           </HStack>
-          <Text mt={"-1 !important"} color="rgb(255,171,45)" fontWeight={'600'}>
+          <Text
+            color="rgb(255,171,45)"
+            fontWeight={'600'}
+            fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
+            // marginBottom={'5 !important'}
+          >
             {' '}
             {/* Import <chakra.span color={'rgb(48,108,79)'}> BNB </chakra.span>by card. */}
             BUY with credit/debit card BNB, WBTC, USDT And SWAP to MDC
           </Text>
-          <Image alignSelf={'end'} src={card} w="36" />
+          <Image
+            alignSelf={'end'}
+            src={card}
+            w={{ base: '20', sm: '24', md: '28', lg: '32' }}
+          />
           <Button
             fontSize={'lg'}
             _hover={{}}
