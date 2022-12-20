@@ -375,6 +375,7 @@ const Swap = () => {
                       id="second_input"
                       placeholder='0.0'
                       type="number"
+                      name="pricePfp"
                       value={inputPfp || convertedToken}
                       variant={'unstyled'}
                       handleChange={handleChange}

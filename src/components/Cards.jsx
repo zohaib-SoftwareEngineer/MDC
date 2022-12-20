@@ -48,7 +48,7 @@ const Cards = () => {
       defaultCryptoCurrency: 'BNB', // Example 'ETH'
       walletAddress: walletAddress, // Your customer's wallet address
       themeColor: '#f28b03', // App theme color
-      fiatCurrency: 'EUR', // If you want to limit fiat selection eg 'GBP'
+      fiatCurrency: 'USD', // If you want to limit fiat selection eg 'GBP'
       email: '', // Your customer's email address
       redirectURL: '', // Redirect URL of your app
     });

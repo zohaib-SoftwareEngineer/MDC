@@ -35,7 +35,7 @@ const HowToStart = () => {
             Go to MetaMask and install the Chrome extension (
             
             <chakra.span color="#f28b03" _hover={{ cursor: 'pointer' }}>
-             <Link href='https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn'>CLICK HERE </Link>
+             <Link href='https://metamask.io/' target={'_blank'}>CLICK HERE</Link>
             </chakra.span>
             ). We recommend to install MetaMask plugin only from a computer.
           </Text>

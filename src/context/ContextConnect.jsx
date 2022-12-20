@@ -44,6 +44,8 @@ export function ContextConnect({ children }) {
 
   // Input Handler
   const handleChange = (e, name, id) => {
+    console.log('mustafa22',e.target.value)
+    console.log('mustafa23',name)
     if (name === 'price') {
       if (e.target.value === '') {
         setconvertedToken(0);
@@ -191,11 +193,13 @@ export function ContextConnect({ children }) {
     } else {
       try {
         setIsLoadingBuy(true);
-        const convertedObject = Object.values(input);
+        console.log('mustafa',convertedCurrency)
+        const convertedObject = convertedCurrency //Object.values(input);
 
-        const convertedInput = ethers.utils.parseEther(
-          convertedObject.join('')
-        );
+        const convertedInput = ethers.utils.parseEther(convertedCurrency);
+        // const convertedInput = ethers.utils.parseEther(
+        //   convertedObject.join('')
+        // );
         const investUSD = await icoContract.investUSDT(convertedInput, {
           gasLimit: 3000000,
         });
@@ -219,7 +223,8 @@ export function ContextConnect({ children }) {
           setisApproveButton(false);
         
       } catch (e) {
-        // console.log('transaction rejected/Reverted.');
+        console.log("🚀 ~ file: ContextConnect.jsx:222 ~ usdtContractFunction ~ e", e)
+        console.log('transaction rejected/Reverted.');
         setisApproveButton(false);
         setIsLoadingBuy(false);
         toast({
@@ -254,11 +259,14 @@ export function ContextConnect({ children }) {
     } else {
       try {
         setIsLoadingBuy(true);
-        const convertedObject = Object.values(input);
+        const convertedObject = convertedCurrency//Object.values(input);
 
         const convertedInput = ethers.utils.parseEther(
-          convertedObject.join('')
+          convertedObject
         );
+        // const convertedInput = ethers.utils.parseEther(
+        //   convertedObject.join('')
+        // );
 
         const investwbtc = await icoContract.investWBTC(convertedInput, {
           gasLimit: 3000000,
@@ -302,10 +310,11 @@ export function ContextConnect({ children }) {
         icoAbi,
         signer
       );
-      const convertedObject = Object.values(input);
+      const convertedObject = convertedCurrency//Object.values(input);
       //const convertedInput = await ethers.utils.parseEther(convertedObject);
       const options = {
-        value: ethers.utils.parseEther(convertedObject.join('')),
+        //value: ethers.utils.parseEther(convertedObject.join('')),
+        value: ethers.utils.parseEther(convertedObject),
         gasLimit: 3000000,
       };
       const transaction = await icoContract.investBNB(options);
@@ -416,6 +425,7 @@ export function ContextConnect({ children }) {
 
   // Conver PFP to Currency
   const pfoToCurrency = async () => {
+    
     const convertedInput = ethers.utils.parseEther(inputPfp);
     const icoContract = new ethers.Contract(icoContractAddress, icoAbi, signer);
     let currency = await icoContract.bnbAgainstTokens(convertedInput);
@@ -426,6 +436,7 @@ export function ContextConnect({ children }) {
     }
 
     const pfpformat = ethers.utils.formatEther(currency);
+    console.log("🚀 ~ file: ContextConnect.jsx:434 ~ pfoToCurrency ~ pfpformat", pfpformat)
     setconvertedCurrency(Number(pfpformat).toFixed(4));
     setInput(null);
   };
