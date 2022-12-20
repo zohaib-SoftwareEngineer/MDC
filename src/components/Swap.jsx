@@ -22,7 +22,7 @@ import React, { useContext, useEffect, useState, useCallback } from 'react';
 import mdclogo from '../assets/images/coin.png';
 import bnb from '../assets/images/bnb.png';
 import SelectCurrency from './SelectCurrency';
-import { BsArrowDownShort, BsThreeDots } from 'react-icons/bs';
+import { BsArrowDownShort, BsChevronDown, BsThreeDots } from 'react-icons/bs';
 import {
   AiOutlineFacebook,
   AiOutlineInfoCircle,
@@ -32,8 +32,7 @@ import { FaTelegramPlane } from 'react-icons/fa';
 import ContextWallet from '../context/ContextConnect';
 
 const CurrencyInput = ({ id, placeholder, name, value, handleChange, type }) => {
-  if ((value == '0'))
-  {
+  if ((value == '0')) {
     value = "";
   }
   return (
@@ -81,7 +80,7 @@ const Swap = () => {
     isFirstInput,
     isLoadingApproval
   } = useContext(ContextWallet);
-  
+
   const [currentConvertedToken, setcurrentConvertedToken] = useState(convertedToken);
   const [currentConvertedCurrency, setcurrentConvertedCurrency] = useState(convertedCurrency);
 
@@ -114,14 +113,14 @@ const Swap = () => {
   return (
     <Stack w='100%' alignSelf={'center'}>
       <Stack
-      alignSelf={'center'}
+        alignSelf={'center'}
         bgColor={'#23242A'}
         h={'fit-content'}
-        w={{base:'95%',md:'50%',lg:"40%"}}
+        w={{ base: '95%', md: '50%', lg: "40%" }}
         borderRadius="2xl"
         justify={'space-between'}
         pb={'6'}
-        px={{base:'0',md:'2'}}
+        px={{ base: '0', md: '2' }}
       >
         <Stack>
           {/* Header */}
@@ -131,14 +130,14 @@ const Swap = () => {
             w={'100%'}
             justify={'space-between'}
             px={'2'}
-            py={'2'}
+            py={'4'}
           >
             <Img
               src={mdclogo}
               boxSize={{ base: '12', lg: '130' }}
               objectFit={'cover'}
             />
-            <HStack w={{base:'90%',sm:'60%'}}>
+            <HStack w={{ base: '90%', sm: '60%' }} justify={'end'}>
               <HStack
                 color={'#B2B9D2'}
                 as={Button}
@@ -163,17 +162,18 @@ const Swap = () => {
                 border={'1px solid #fba826'}
                 _hover={{
                   color: 'white',
-                  bgColor: '#e89a03' 
+                  bgColor: '#e89a03'
                 }}
                 onClick={() => connectWallet()}
                 size={{ base: 'sm', lg: 'lg' }}
-                pointerEvents={walletAddress?'none':'inherit'}
+                pointerEvents={walletAddress ? 'none' : 'inherit'}
               >
                 {walletAddress ? (
                   <Text
-                  // textOverflow={'ellipsis 3ch;'}
-                  // overflow={'hidden'}
-                  // w={'14'}
+                    // textOverflow={'ellipsis 3ch;'}
+                    // overflow={'hidden'}
+                    // w={'14'}
+                    fontSize={'xl'}
                   >
                     {addressString}
                   </Text>
@@ -252,13 +252,13 @@ const Swap = () => {
                                     <MenuItem as={Button} rightIcon={<CgNotes />} justifyContent={'space-between'} bgColor={'transparent'} color={'rgb(195, 197, 203)'} _hover={{ color: 'white', bgColor: 'transparent' }} _focus={{}} _active={{}}>
                                         Legal and Privacy
                                 </MenuItem> */}
-                 {/*  </MenuList>
+              {/*  </MenuList>
               </Menu> */}
             </HStack>
           </Stack>
 
-          <Stack px={'2'}>
-            {/* <Button
+          {/* <Stack px={'2'}>
+            <Button
               // as={Link}
               // href='https://pfptoken.netlify.app/'
               onClick={onOpen}
@@ -274,11 +274,11 @@ const Swap = () => {
               borderRadius={'2xl'}
             >
               Import BNB From Card
-            </Button> */}
-          </Stack>
+            </Button>
+          </Stack> */}
 
           {/* Swap Converter */}
-          <Stack px={'2'}>
+          <Stack px={'2'} mt={'0 !important'}>
             <Stack
               bgColor={'#191B1F'}
               borderRadius={'2xl'}
@@ -297,7 +297,7 @@ const Swap = () => {
                   border={'1px solid #23242A !important'}
                   borderRadius={'2xl'}
                   color={'#B2B9D2'}
-                  px={{base:'2',md:'6'}}
+                  px={{ base: '2', md: '6' }}
                   py={'2'}
                 >
                   <HStack fontWeight={'bold'}>
@@ -347,7 +347,7 @@ const Swap = () => {
                   p={'1px'}
                 >
                   <Stack
-                  border= {'1px solid #fba826'}
+                    border={'1px solid #fba826'}
                     w={'fit-content'}
                     bgColor={'#212429'}
                     borderRadius={'xl'}
@@ -367,7 +367,7 @@ const Swap = () => {
                   border={'1px solid #23242A !important'}
                   borderRadius={'2xl'}
                   color={'#B2B9D2'}
-                  px={{base:'2',md:'6'}}
+                  px={{ base: '2', md: '6' }}
                   py={'2'}
                 >
                   <HStack fontWeight={'bold'}>
@@ -393,6 +393,9 @@ const Swap = () => {
                     >
                       <Img src={mdclogo} boxSize={'6'} />
                       <Text>MDC</Text>
+                      <div style={{ visibility: 'hidden' }}>
+                        <BsChevronDown />
+                      </div>
                     </HStack>
                   </HStack>
                   <HStack justify={'space-between'}>
@@ -426,9 +429,9 @@ const Swap = () => {
                     </Stack>
                   </HStack>
                   <Button
-                  loadingText="Approving"
-                  isLoading={isLoadingApproval}
-                  isDisabled={isLoadingApproval}
+                    loadingText="Approving"
+                    isLoading={isLoadingApproval}
+                    isDisabled={isLoadingApproval}
                     bg="white"
                     color={'black'}
                     _hover={{}}

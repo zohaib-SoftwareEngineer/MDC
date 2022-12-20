@@ -17,11 +17,12 @@ export default function App({ setStateOfParent, setSelectedNetwork }) {
             <MenuButton
                 as={Button}
                 bgColor={'rgb(44, 47, 54)'} borderRadius={'2xl'}
+                rightIcon={<BsChevronDown />}
                 _hover={{ bgColor: 'rgb(64, 68, 79)', borderColor: '1px solid rgb(64, 68, 79)' }}
                 _focus={{ bgColor: 'rgb(44, 47, 54)' }}
                 _active={{ bgColor: 'rgb(44, 47, 54)' }}
                 minW={'auto'}
-                w={{ base: '10rem', md: '8rem' }}
+                w={{ base: '10rem', md: '11rem' }}
                 size={{ base: 'sm', md: 'md' }}
                 justifyContent={'center'}
             >
