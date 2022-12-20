@@ -151,7 +151,7 @@ const Swap = () => {
                 spacing={'4'}
                 px={'6'}
               >
-                <Img src={image} w={'6'} />
+                <Img src={image} w={'12'} />
               </HStack>
               <Button
                 w={'70%'}
@@ -166,7 +166,7 @@ const Swap = () => {
                   bgColor: '#e89a03' 
                 }}
                 onClick={() => connectWallet()}
-                size={{ base: 'sm', lg: 'md' }}
+                size={{ base: 'sm', lg: 'lg' }}
                 pointerEvents={walletAddress?'none':'inherit'}
               >
                 {walletAddress ? (
@@ -384,6 +384,7 @@ const Swap = () => {
                       as={Button}
                       minW={'auto'}
                       borderRadius={'2xl'}
+                      w={{ base: '10rem', md: '8rem' }}
                       bgColor={'rgb(44, 47, 54)'}
                       boxShadow={'rgb(0 0 0 / 8%) 0px 6px 10px'}
                       _hover={{ bgColor: 'rgb(64, 68, 79)' }}

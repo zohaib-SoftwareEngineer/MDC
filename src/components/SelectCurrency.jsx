@@ -16,18 +16,20 @@ export default function App({ setStateOfParent, setSelectedNetwork }) {
         <Menu>
             <MenuButton
                 as={Button}
-                rightIcon={<BsChevronDown color='white' />}
                 bgColor={'rgb(44, 47, 54)'} borderRadius={'2xl'}
                 _hover={{ bgColor: 'rgb(64, 68, 79)', borderColor: '1px solid rgb(64, 68, 79)' }}
                 _focus={{ bgColor: 'rgb(44, 47, 54)' }}
                 _active={{ bgColor: 'rgb(44, 47, 54)' }}
-                w={{base:'12rem',md:'13rem'}}
+                minW={'auto'}
+                w={{ base: '10rem', md: '8rem' }}
                 size={{ base: 'sm', md: 'md' }}
-
-
+                justifyContent={'center'}
             >
-                <HStack >
-                    <Img src={option} boxSize={{ base: '4', md: '6' }} />
+                <HStack
+                    justify={'center'}
+                   
+                >
+                    <Img src={option} boxSize={'6'} />
                     <Text fontSize={{ base: 'xs', md: 'sm' }} color={'#B2B9D2'}>{optionName}</Text>
                 </HStack>
             </MenuButton>
