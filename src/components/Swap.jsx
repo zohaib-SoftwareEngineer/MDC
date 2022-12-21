@@ -289,7 +289,7 @@ const Swap = () => {
               <HStack color={'white'} px={'3'} justify={'space-between'}>
                 <Text fontWeight={'bold'}>Buy MDC Tokens</Text>
               </HStack>
-              <Stack spacing={'-3'}>
+              <Stack spacing={'-3'} className="test">
                 <Stack
                   _hover={{ border: '1px solid #fba826 !important' }}
                   bgColor={'#23242A'}
@@ -299,8 +299,10 @@ const Swap = () => {
                   color={'#B2B9D2'}
                   px={{ base: '2', md: '6' }}
                   py={'2'}
+
                 >
-                  <HStack fontWeight={'bold'}>
+                  <HStack fontWeight={'bold'} className={'test'}
+                    flexDirection={{ base: 'column', md: 'row' }}>
                     <CurrencyInput
                       id="first_input"
                       value={input || convertedCurrency}
@@ -370,7 +372,7 @@ const Swap = () => {
                   px={{ base: '2', md: '6' }}
                   py={'2'}
                 >
-                  <HStack fontWeight={'bold'}>
+                  <HStack fontWeight={'bold'} flexDirection={{ base: 'column', md: 'row' }}>
                     <CurrencyInput
                       id="second_input"
                       placeholder='0.0'
@@ -381,15 +383,15 @@ const Swap = () => {
                       handleChange={handleChange}
                     />
                     <HStack
-                      as={Button}
-                      minW={'auto'}
-                      borderRadius={'2xl'}
-                      w={{ base: '10rem', md: '8rem' }}
-                      bgColor={'rgb(44, 47, 54)'}
-                      boxShadow={'rgb(0 0 0 / 8%) 0px 6px 10px'}
-                      _hover={{ bgColor: 'rgb(64, 68, 79)' }}
-                      spacing={'4'}
-                      px={'6'}
+                       as={Button}
+                       bgColor={'rgb(44, 47, 54)'} borderRadius={'2xl'}
+                       _hover={{ bgColor: 'rgb(64, 68, 79)', borderColor: '1px solid rgb(64, 68, 79)' }}
+                       _focus={{ bgColor: 'rgb(44, 47, 54)' }}
+                       _active={{ bgColor: 'rgb(44, 47, 54)' }}
+                       minW={'auto'}
+                       w={{ base: '10rem', md: '11rem' }}
+                       size={{ base: 'sm', md: 'md' }}
+                       justifyContent={'center'}
                     >
                       <Img src={mdclogo} boxSize={'6'} />
                       <Text>MDC</Text>
@@ -398,10 +400,10 @@ const Swap = () => {
                       </div>
                     </HStack>
                   </HStack>
-                  <HStack justify={'space-between'}>
-                    {/* <Text>(In process)</Text> */}
-                    {/*<Text>Balance</Text>*/}
-                  </HStack>
+                  {/* <HStack justify={'space-between'}>
+                    <Text>(In process)</Text>
+                    <Text>Balance</Text>
+                  </HStack> */}
                 </Stack>
               </Stack>
               <Stack>
