@@ -44,25 +44,25 @@ export function ContextConnect({ children }) {
 
   // Input Handler
   const handleChange = (e, name, id) => {
-    console.log('mustafa22',e.target.value)
-    console.log('mustafa23',name)
+    // console.log('mustafa22',e.target.value)
+    // console.log('mustafa23',name)
     if (name === 'price') {
       if (e.target.value === '') {
         setconvertedToken("");
         setconvertedCurrency("");
-        setinputPfp(0);
+        setinputPfp("");
       }
       setInput(e.target.value);
-      setinputPfp(null);
+      setinputPfp("");
       setFirstInput('first_input');
     } else {
       if (e.target.value === '') {
         setconvertedCurrency("");
         setconvertedToken("");
-        setInput(0);
+        setInput("");
       }
       setinputPfp(e.target.value);
-      setInput(null);
+      setInput("");
       setFirstInput('second_input');
     }
   };
@@ -194,7 +194,7 @@ export function ContextConnect({ children }) {
       try {
         setIsLoadingBuy(true);
         console.log('mustafa',convertedCurrency)
-        const convertedObject = convertedCurrency //Object.values(input);
+        const convertedObject = convertedCurrency || input; //Object.values(input);
 
         const convertedInput = ethers.utils.parseEther(convertedCurrency);
         // const convertedInput = ethers.utils.parseEther(
@@ -259,7 +259,7 @@ export function ContextConnect({ children }) {
     } else {
       try {
         setIsLoadingBuy(true);
-        const convertedObject = convertedCurrency//Object.values(input);
+        const convertedObject = convertedCurrency || input; //Object.values(input);
 
         const convertedInput = ethers.utils.parseEther(
           convertedObject
@@ -310,7 +310,8 @@ export function ContextConnect({ children }) {
         icoAbi,
         signer
       );
-      const convertedObject = convertedCurrency//Object.values(input);
+      const convertedObject = convertedCurrency || input;
+      //Object.values(input);
       //const convertedInput = await ethers.utils.parseEther(convertedObject);
       const options = {
         //value: ethers.utils.parseEther(convertedObject.join('')),
@@ -419,7 +420,7 @@ export function ContextConnect({ children }) {
       const usdtToPfpformat = ethers.utils.formatEther(tokens);
       const usdtnmbr = Number(usdtToPfpformat);
       setconvertedToken(usdtnmbr.toFixed(4));
-      setinputPfp(null);
+      setinputPfp("");
     }
   };
 
@@ -438,14 +439,18 @@ export function ContextConnect({ children }) {
     const pfpformat = ethers.utils.formatEther(currency);
     console.log("🚀 ~ file: ContextConnect.jsx:434 ~ pfoToCurrency ~ pfpformat", pfpformat)
     setconvertedCurrency(Number(pfpformat).toFixed(4));
-    setInput(null);
+    setInput("");
   };
 
   useEffect(() => {
+    if (!inputPfp) return;
+
     pfoToCurrency();
   }, [inputPfp, network]);
 
   useEffect(() => {
+    if (!input) return;
+
     usdtToPfp();
   }, [input, network]);
 
