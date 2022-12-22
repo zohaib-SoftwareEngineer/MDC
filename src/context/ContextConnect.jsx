@@ -21,14 +21,14 @@ export function ContextConnect({ children }) {
   const [wbtcBalance, setwbtcBalance] = useState();
   const [pfpBalance, setpfpBalance] = useState();
   const [usdtBalance, setusdtBalance] = useState();
-  const [input, setInput] = useState();
-  const [inputPfp, setinputPfp] = useState();
+  const [input, setInput] = useState("");
+  const [inputPfp, setinputPfp] = useState("");
   const [isApproveButton, setisApproveButton] = useState(false);
   const [isLoadingBuy, setIsLoadingBuy] = useState(false);
   const [isLoadingApproval, setIsLoadingApproval] = useState(false);
   const [network, setNetwork] = useState('BNB');
-  const [convertedToken, setconvertedToken] = useState(0);
-  const [convertedCurrency, setconvertedCurrency] = useState(0);
+  const [convertedToken, setconvertedToken] = useState("");
+  const [convertedCurrency, setconvertedCurrency] = useState("");
   const [isFirstInput, setFirstInput] = useState('first_input');
 
   let provider = window.ethereum
@@ -48,8 +48,8 @@ export function ContextConnect({ children }) {
     console.log('mustafa23',name)
     if (name === 'price') {
       if (e.target.value === '') {
-        setconvertedToken(0);
-        setconvertedCurrency(0);
+        setconvertedToken("");
+        setconvertedCurrency("");
         setinputPfp(0);
       }
       setInput(e.target.value);
@@ -57,8 +57,8 @@ export function ContextConnect({ children }) {
       setFirstInput('first_input');
     } else {
       if (e.target.value === '') {
-        setconvertedCurrency(0);
-        setconvertedToken(0);
+        setconvertedCurrency("");
+        setconvertedToken("");
         setInput(0);
       }
       setinputPfp(e.target.value);

@@ -32,9 +32,6 @@ import { FaTelegramPlane } from 'react-icons/fa';
 import ContextWallet from '../context/ContextConnect';
 
 const CurrencyInput = ({ id, placeholder, name, value, handleChange, type }) => {
-  if ((value == '0')) {
-    value = "";
-  }
   return (
     <input
       id={id}
