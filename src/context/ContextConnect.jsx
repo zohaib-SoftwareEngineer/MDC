@@ -400,59 +400,88 @@ export function ContextConnect({ children }) {
     }
   };
 
-  // Convert usdt to pfp token
-  const usdtToPfp = async () => {
-    // // console.log('usdttopfp fun');
-    const convertedInput = ethers.utils.parseEther(input);
-    const icoContract = new ethers.Contract(icoContractAddress, icoAbi, signer);
-    if (network === 'BNB') {
-      const tokens = await icoContract.tokensAgainstbnb(convertedInput);
-      const usdtToPfpformat = ethers.utils.formatEther(tokens);
-      const usdtnmbr = Number(usdtToPfpformat);
-      setconvertedToken(usdtnmbr.toFixed(4));
-    } else if (network === 'USDT') {
-      const tokens = await icoContract.tokensAgainstUSDT(convertedInput);
-      const usdtToPfpformat = ethers.utils.formatEther(tokens);
-      const usdtnmbr = Number(usdtToPfpformat);
-      setconvertedToken(usdtnmbr.toFixed(4));
-    } else if (network === 'WBTC') {
-      const tokens = await icoContract.tokensAgainstwbtc(convertedInput);
-      const usdtToPfpformat = ethers.utils.formatEther(tokens);
-      const usdtnmbr = Number(usdtToPfpformat);
-      setconvertedToken(usdtnmbr.toFixed(4));
-      setinputPfp("");
-    }
-  };
-
-  // Conver PFP to Currency
-  const pfoToCurrency = async () => {
-    
-    const convertedInput = ethers.utils.parseEther(inputPfp);
-    const icoContract = new ethers.Contract(icoContractAddress, icoAbi, signer);
-    let currency = await icoContract.bnbAgainstTokens(convertedInput);
-    if (network === 'USDT') {
-      currency = await icoContract.usdtAgainstTokens(convertedInput);
-    } else if (network === 'WBTC') {
-      currency = await icoContract.wbtcAgainstTokens(convertedInput);
-    }
-
-    const pfpformat = ethers.utils.formatEther(currency);
-    console.log("🚀 ~ file: ContextConnect.jsx:434 ~ pfoToCurrency ~ pfpformat", pfpformat)
-    setconvertedCurrency(pfpformat);
-    // setconvertedCurrency(Number(pfpformat).toFixed(4));
-    setInput("");
-  };
-
   useEffect(() => {
-    if (!inputPfp) return;
+    let isSubscribed = true;
+
+    // Conver PFP to Currency
+    const pfoToCurrency = async () => {
+      const convertedInput = ethers.utils.parseEther(inputPfp);
+      const icoContract = new ethers.Contract(icoContractAddress, icoAbi, signer);
+      let currency = await icoContract.bnbAgainstTokens(convertedInput);
+      if (network === 'USDT') {
+        currency = await icoContract.usdtAgainstTokens(convertedInput);
+      } else if (network === 'WBTC') {
+        currency = await icoContract.wbtcAgainstTokens(convertedInput);
+      }
+
+      const pfpformat = ethers.utils.formatEther(currency);
+      console.log("🚀 ~ file: ContextConnect.jsx:434 ~ pfoToCurrency ~ pfpformat", pfpformat)
+
+      if (isSubscribed) {
+        setconvertedCurrency(pfpformat);
+        // setconvertedCurrency(Number(pfpformat).toFixed(4));
+        setInput("");
+      }
+    };
+    
+    if (!inputPfp) {
+      setInput("");
+      setconvertedCurrency("");
+      
+      return;
+    }
 
     pfoToCurrency();
+
+    return () => {
+      isSubscribed = false;
+    }
   }, [inputPfp, network]);
 
   useEffect(() => {
-    if (!input) return;
+    let isSubscribed = true;
+
+    // Convert usdt to pfp token
+    const usdtToPfp = async () => {
+      let usdtNumber;
+      const convertedInput = ethers.utils.parseEther(input);
+      const icoContract = new ethers.Contract(icoContractAddress, icoAbi, signer);
+
+      if (network === 'BNB') {
+        const tokens = await icoContract.tokensAgainstbnb(convertedInput);
+        const usdtToPfpformat = ethers.utils.formatEther(tokens);
+        usdtNumber = Number(usdtToPfpformat);
+        // setconvertedToken(usdtnmbr.toFixed(4));
+      } else if (network === 'USDT') {
+        const tokens = await icoContract.tokensAgainstUSDT(convertedInput);
+        const usdtToPfpformat = ethers.utils.formatEther(tokens);
+        usdtNumber = Number(usdtToPfpformat);
+        // setconvertedToken(usdtnmbr.toFixed(4));
+      } else if (network === 'WBTC') {
+        const tokens = await icoContract.tokensAgainstwbtc(convertedInput);
+        const usdtToPfpformat = ethers.utils.formatEther(tokens);
+        usdtNumber = Number(usdtToPfpformat);
+        // setconvertedToken(usdtnmbr.toFixed(4));
+      }
+
+      if (isSubscribed) {
+        setconvertedToken(usdtNumber.toFixed(4));
+        setinputPfp("");
+      }
+    };
+
+    if (!input) {
+      setinputPfp("");
+      setconvertedToken("");
+
+      return;
+    }
 
     usdtToPfp();
+
+    return () => {
+      isSubscribed = false;
+    }
   }, [input, network]);
 
   // const fetchUsdtMarketValue = async () => {
