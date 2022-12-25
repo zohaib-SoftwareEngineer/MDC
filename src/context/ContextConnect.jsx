@@ -53,7 +53,6 @@ export function ContextConnect({ children }) {
         setinputPfp("");
       }
       setInput(e.target.value);
-      setinputPfp("");
       setFirstInput('first_input');
     } else {
       if (e.target.value === '') {
@@ -62,7 +61,6 @@ export function ContextConnect({ children }) {
         setInput("");
       }
       setinputPfp(e.target.value);
-      setInput("");
       setFirstInput('second_input');
     }
   };
@@ -425,9 +423,6 @@ export function ContextConnect({ children }) {
     };
     
     if (!inputPfp) {
-      setInput("");
-      setconvertedCurrency("");
-      
       return;
     }
 
@@ -471,9 +466,6 @@ export function ContextConnect({ children }) {
     };
 
     if (!input) {
-      setinputPfp("");
-      setconvertedToken("");
-
       return;
     }
 
