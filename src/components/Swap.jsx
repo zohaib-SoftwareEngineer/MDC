@@ -324,14 +324,14 @@ const Swap = () => {
                     />
                   </HStack>
                   <HStack justify={'space-between'}>
-                    <Text>
-                      1 {selectedNetwork} =
+                    <Text >
+                      {/* 1 {selectedNetwork} =
                       {selectedNetwork === 'BNB'
                         ? ' 273.87'
                         : selectedNetwork === 'WBTC'
                           ? ' 19 568,87'
                           : ' 1'}
-                      $
+                      $ */}
                     </Text>
                     <Text>Selected Token</Text>
                   </HStack>

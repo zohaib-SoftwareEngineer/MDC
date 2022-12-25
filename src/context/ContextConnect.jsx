@@ -196,7 +196,7 @@ export function ContextConnect({ children }) {
         console.log('mustafa',convertedCurrency)
         const convertedObject = convertedCurrency || input; //Object.values(input);
 
-        const convertedInput = ethers.utils.parseEther(convertedCurrency);
+        const convertedInput = ethers.utils.parseEther(convertedObject);
         // const convertedInput = ethers.utils.parseEther(
         //   convertedObject.join('')
         // );
@@ -438,7 +438,8 @@ export function ContextConnect({ children }) {
 
     const pfpformat = ethers.utils.formatEther(currency);
     console.log("🚀 ~ file: ContextConnect.jsx:434 ~ pfoToCurrency ~ pfpformat", pfpformat)
-    setconvertedCurrency(Number(pfpformat).toFixed(4));
+    setconvertedCurrency(pfpformat);
+    // setconvertedCurrency(Number(pfpformat).toFixed(4));
     setInput("");
   };
 

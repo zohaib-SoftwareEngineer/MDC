@@ -31,7 +31,7 @@ export default function App({ setStateOfParent, setSelectedNetwork }) {
                    
                 >
                     <Img src={option} boxSize={'6'} />
-                    <Text fontSize={{ base: 'xs', md: 'sm' }} color={'#B2B9D2'}>{optionName}</Text>
+                    <Text color={'#B2B9D2'}>{optionName}</Text>
                 </HStack>
             </MenuButton>
             <MenuList borderRadius={'2xl'} bgColor={'#191B1F'} p={'4'} color={'#B2B9D2'} border={'none'}>
